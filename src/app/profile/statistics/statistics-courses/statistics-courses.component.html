@@ -1,0 +1,65 @@
+<div class="one-column">
+
+    <mat-card>
+        <div *ngIf="stat_courses.length">
+            <mat-table #table [dataSource]="stat_courses_ds" class="staticticsTable">
+
+                <ng-container matColumnDef="csv">
+                    <mat-header-cell *matHeaderCellDef>Download CSV</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button (click)="downloadFile(element.course)" mat-icon-button color="primary">
+                            <mat-icon>cloud_download</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Course Column -->
+                <ng-container matColumnDef="course">
+                    <mat-header-cell *matHeaderCellDef>Course</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.course.name}}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Assigned Users Column -->
+                <ng-container matColumnDef="assigned_users">
+                    <mat-header-cell *matHeaderCellDef>Assigned</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.assigned}}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Assigned Users Column -->
+                <ng-container matColumnDef="started_users">
+                    <mat-header-cell *matHeaderCellDef>Started</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.started}}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Assigned Users Column -->
+                <ng-container matColumnDef="completed_users">
+                    <mat-header-cell *matHeaderCellDef>Completed</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        {{element.completed}}
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef>Link</mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-button color="accent" routerLink="/profile/course/{{element.course.id}}/manage/progress"> Details </button>
+                    </mat-cell>
+                </ng-container>
+
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+        <div *ngIf="!stat_courses.length">
+            <h4>You have no courses statistics at the moment</h4>
+        </div>
+    </mat-card>
+</div>

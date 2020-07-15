@@ -1,0 +1,59 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/courses" class="naked-link">← Back to Courses List</a>
+    </div>
+    <div class="action-buttons">
+        <a mat-button color="accent" href="/profile/course/{{course.id}}/preview" target="_blank">Preview</a>
+    </div>
+</div>
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Lessons</h4>
+    </div>
+    <div *ngIf="course.lessons.length">
+        <mat-card class="lesson-list-container">
+            <div class="create-edit-action-bar">
+                <button mat-raised-button color="primary" routerLink="/profile/course/{{course.id}}/edit/curriculum/lesson/new">Create Lesson</button>
+            </div>
+            <mat-divider></mat-divider>
+            <div dragula="lessons-list" [dragulaModel]="course.lessons">
+                <div *ngFor="let lesson of course.lessons" class="row">
+                    <div class="drag-container drag-handle">
+                        <mat-icon class="drag-handle" matTooltip="Drag and drop to change lesson order" color="primary">drag_indicator</mat-icon>
+                    </div>
+                    <div class="lesson-name"><h5>Lesson {{lesson.order}} | {{lesson.name}}</h5></div>
+                    <div class="lesson-edit-button">
+                        <mat-icon matTooltip="Lesson edit page" routerLink="/profile/course/{{course.id}}/edit/curriculum/lesson/{{lesson.id}}/edit" color="primary">edit</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+
+    </div>
+
+    <div *ngIf="!course.lessons.length">
+        <mat-card>
+          <div class="create-edit-action-bar">
+              <button mat-raised-button color="primary" routerLink="/profile/course/{{course.id}}/edit/curriculum/lesson/new">Create Lesson</button>
+          </div>
+            <div>
+                Course is empty. Please create some lessons.
+            </div>
+        </mat-card>
+    </div>
+
+</div>
+
+<div *ngIf="course.lessons.length" class="multi-column one-four row-loose">
+    <div>
+        <h4>Save lesson order</h4>
+        <p>Permanently update the order of lessons</p>
+    </div>
+    <div>
+        <mat-card>
+            <button mat-raised-button color="primary" (click)="updateOrder()">Save</button>
+            <mat-error *ngIf="errors.order.display">{{errors.order.message}}</mat-error>
+        </mat-card>
+    </div>
+</div>

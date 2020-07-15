@@ -1,0 +1,76 @@
+// These rules need to get abstracted into a pattern...
+
+
+.filter-container {
+  margin-bottom: 2rem !important;
+
+  .filter-bar {
+    width: 100%;
+    @include flex-horizontal;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    @include mq('tablet', max) {
+      @include flex-vertical {
+        align-items: center;
+      }
+    }
+    //.filter-bar-title {
+    //  @include flex-horizontal{
+    //    justify-content: space-between;
+    //    align-items: center;
+    //  }
+    //  margin: auto 0;
+    //  @include mq('tablet', max) {
+    //    margin: 0 0 10px 0;
+    //  }
+    //}
+    .whole {
+      flex: 1 1 100%;
+      -ms-flex: 1 1 100%;
+    }
+
+    .half {
+      flex: 0 1 50%;
+      -ms-flex: 0 1 50%;
+    }
+
+    .third {
+      flex: 0 1 33%;
+      -ms-flex: 0 1 33%;
+    }
+
+    .quarter {
+      flex: 0 1 25%;
+      -ms-flex: 0 1 25%;
+    }
+  }
+
+  mat-form-field {
+    margin: 0 0 0 15px;
+    @include mq('tablet', max) {
+      margin: 0 0 10px 0;
+    }
+  }
+  .action-buttons {
+    @include mq('phablet', max) {
+      flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+      margin: auto 0;
+      button{
+        margin: 0 0.25rem 0;
+      }
+    }
+    @include mq('tablet', min) {
+      flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+      text-align: right;
+      margin: auto;
+      button{
+        margin: 0 0.5rem 0 0;
+      }
+    }
+  }
+}
+
+
+

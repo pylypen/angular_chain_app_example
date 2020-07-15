@@ -1,0 +1,288 @@
+@import "variables.scss";
+
+
+// Login, Register, Forgot-Password, Reset-Password form are here
+.login-form-container,
+.reset-password-form-container,
+.forgot-password-form-container,
+.activate-account-form-container {
+    h3 {
+        text-align:center;
+    }
+  .mat-card {
+    padding: 0 !important;
+    border-radius: 1rem !important;
+      margin: 0 auto;
+      @include mq('tablet-small', max) {
+          width: 90%;
+          padding: 1rem .5rem 3rem;
+      }
+    .login-form,
+    .forgot-password-form,
+    .reset-password-form,
+    .sign-up-form,
+    .activate-account-form {
+      height: 100%;
+      @include flex-vertical;
+
+      @include mq('phone', max) {
+        width: 100%;
+        padding: 1rem .5rem 3rem;
+      }
+      @include mq('tablet-small', min) {
+        width: 400px;
+        padding: 1rem .5rem 3rem;
+      }
+
+      // Login Form //
+      &.login-form{
+        .login-form-options{
+          @include flex-horizontal{
+            justify-content: space-between;
+            align-items: center;
+            padding: .5rem;
+            > * {
+              margin: auto 0;
+            }
+          }
+
+        }
+        .social{
+          @include flex-horizontal{
+            justify-content: space-between;
+            align-items: center;
+          }
+          width: 6rem;
+          height: 1.5rem;
+          position: absolute;
+          bottom: 1rem;
+          left: calc(50% - 3rem);
+          a{
+            svg-icon{
+              width: 100%;
+              height: 100%;
+              svg path{
+                fill: $brand-tertiary;
+              }
+            }
+            cursor: pointer;
+            width: 20%;
+          }
+        }
+      }
+
+
+
+      // Login form end //
+
+      .actions{
+        @include flex-vertical{
+          justify-content: center;
+          align-items: center;
+        }
+        button{
+          width: 100%;
+          margin-top: 1.5rem;
+          border-radius: 3rem !important;
+          height: 3rem !important;
+        }
+      }
+
+    }
+
+      .sign-up-form {
+          height: 100%;
+          @include flex-vertical;
+
+          @include mq('phone', max) {
+              width: 90%;
+              padding: 1rem .5rem 3rem;
+          }
+          @include mq('phablet', min) {
+              width: 500px;
+              padding: 1rem .5rem 3rem;
+          }
+
+          h2{
+              text-align: center;
+          }
+          .tier-card{
+              margin: 2rem 0 2rem 0;
+          }
+
+          .actions{
+              @include flex-vertical{
+                  justify-content: center;
+                  align-items: center;
+              }
+              button{
+                  width: 100%;
+                  margin-top: 1.5rem;
+                  border-radius: 3rem !important;
+                  height: 3rem !important;
+              }
+          }
+
+      }
+
+  }
+}
+
+
+// Payment card design
+.payment-card {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .expiryDateSlash {
+        @include flex-horizontal {
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .sign-up-col {
+        margin-bottom: 1rem;
+        width: 100%;
+        @include flex-vertical {
+            align-items: center;
+        }
+    }
+
+    .sign-up-row {
+        margin-bottom: 1rem;
+        width: 100%;
+
+        &:first-child {
+            margin-top: 1.5rem;
+        }
+
+        &::last-child {
+            margin-bottom: 1.5rem;
+        }
+
+        @include flex-horizontal {
+            justify-content: space-between;
+        }
+        @include mq('phablet', max) {
+            @include flex-vertical {
+                align-items: center;
+            }
+        }
+
+        .half {
+            @include mq('phablet', max) {
+                &.mat-form-field {
+                    width: 100% !important;
+                }
+            }
+
+            &.mat-form-field {
+                width: 45%;
+            }
+
+            &.expiry {
+                @include flex-horizontal {
+                    align-items: center;
+                }
+            }
+        }
+
+        .full {
+            &.mat-form-field {
+                width: 100%;
+            }
+        }
+    }
+}
+
+// Hidden fields
+.hidden-input {
+    display: none !important;
+}
+
+// Patterns
+.grading-header {
+    @include flex-horizontal;
+    padding: 0.5rem;
+    h4 {
+        flex: 5 5 auto;
+        -ms-flex: 5 5 auto;
+    }
+    button {
+        flex: 1 1 auto;
+        -ms-flex: 1 1 auto;
+        position: relative;
+        top: -6px;
+    }
+}
+
+.question-bank {
+    .question-button {
+
+    }
+}
+
+.question-blocks-container {
+    .question-block {
+        margin: 0 0 20px;
+    }
+}
+
+svg-icon {
+    &.inline-icon {
+        display: inline-flex;
+
+        svg {
+            height: 16px;
+            margin: -2px auto auto;
+        }
+    }
+}
+
+.question-block {
+    position: relative;
+
+    .multi-choice-container {
+        position: relative;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .question-drag-handle,.answers-drag-handle {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: grab;
+        &.drag-choice-block {
+            top: 20px;
+        }
+        &:active {
+            cursor: grabbing;
+        }
+    }
+}
+// un-nested because this belongs to a drag-and-drop element
+.choice-block {
+    position: relative;
+    padding: 0.6rem;
+    margin: 0 0 3px;
+    background: $washed-gray;
+    @include rounded-corners;
+    @include flex-horizontal;
+    justify-content: flex-start;
+    .mat-form-field {
+        flex: 0 0 80%;
+        -ms-flex: 0 0 80%;
+        margin: auto 0.5rem auto 0;
+        mat-checkbox {
+            margin: 0.5rem;
+            position: relative;
+            top: -2px;
+        }
+    }
+
+    button {
+        flex: 0 0 15%;
+        -ms-flex: 0 0 15%;
+    }
+}

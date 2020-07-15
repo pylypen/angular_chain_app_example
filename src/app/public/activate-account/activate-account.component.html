@@ -1,0 +1,61 @@
+<div class="activate-account-form-container">
+    <mat-card>
+        <h3>Activate your account</h3>
+        <div class="activate-account-form">
+
+            <mat-form-field color="accent" class="hidden-input">
+                <input [disabled]="!code_editable" matInput [(ngModel)]="activate_account.confirm_code" type="text"
+                       placeholder="Activation Code" />
+            </mat-form-field>
+            <mat-error *ngIf="activate_account_errors.confirm_code.display">
+                {{ activate_account_errors.confirm_code.message }}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput [(ngModel)]="activate_account.email" type="text" disabled="disabled"
+                       placeholder="Email"/>
+            </mat-form-field>
+            <mat-error *ngIf="activate_account_errors.email.display">
+                {{ activate_account_errors.email.message }}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput [(ngModel)]="activate_account.first_name" type="text"
+                       placeholder="First Name"/>
+            </mat-form-field>
+            <mat-error *ngIf="activate_account_errors.first_name.display">
+                {{ activate_account_errors.first_name.message }}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput [(ngModel)]="activate_account.last_name" type="text"
+                       placeholder="Last Name"/>
+            </mat-form-field>
+            <mat-error *ngIf="activate_account_errors.last_name.display">
+                {{ activate_account_errors.last_name.message }}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput [(ngModel)]="activate_account.password" type="password"
+                       placeholder="Enter a Password"/>
+            </mat-form-field>
+            <mat-error *ngIf="activate_account_errors.password.display">
+                {{ activate_account_errors.password.message }}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput [(ngModel)]="activate_account.password_confirmation" type="password"
+                       placeholder="Confirm Password"/>
+            </mat-form-field>
+            <mat-error *ngIf="activate_account_errors.password_confirmation.display">
+                {{ activate_account_errors.password_confirmation.message }}
+            </mat-error>
+
+            <div class="actions">
+                <button mat-raised-button color="primary" (click)="activateAccount()">
+                    Activate Account
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

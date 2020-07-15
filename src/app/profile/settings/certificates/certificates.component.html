@@ -1,0 +1,54 @@
+<mat-card *ngIf="certs.length" class="cert-table settings-certificates">
+        <mat-table #table [dataSource]="certs_ds" class="certificates">
+
+                    <!-- Cert ID Column -->
+                    <ng-container matColumnDef="cert_name">
+                        <mat-header-cell class="responsive" *matHeaderCellDef>Certificate ID</mat-header-cell>
+                        <mat-cell class="responsive" *matCellDef="let element"> {{element.cert_name}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Course Name Column -->
+                    <ng-container matColumnDef="issued_course_name">
+                        <mat-header-cell  *matHeaderCellDef>Course</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.issued_course_name}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Course Name Column -->
+                    <ng-container matColumnDef="issued_at">
+                        <mat-header-cell class="responsive" *matHeaderCellDef>Issued At</mat-header-cell>
+                        <mat-cell class="responsive" *matCellDef="let element"> {{ element.issued_at }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Issued Org Name Column -->
+                    <ng-container matColumnDef="issued_org_name">
+                        <mat-header-cell *matHeaderCellDef>Issued By</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.issued_org_name}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Issued To Name Column -->
+                    <ng-container matColumnDef="issued_name">
+                        <mat-header-cell *matHeaderCellDef>Issued To</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.issued_user_name}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+
+                            <a class="create-edit" (click)="viewCertificate(element.cert_name)">Download</a>&nbsp;
+                            <a class="create-edit" (click)="renewCertificate(element.course_id)">Renew</a>
+                            <a class="create-edit" (click)="emailCertificate(element.course_id)">Email</a>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+</mat-card>
+
+<mat-card *ngIf="!certs.length" class="cert-table settings-certificates">
+    You have not achieved any Certificate yet!
+</mat-card>

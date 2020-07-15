@@ -1,0 +1,47 @@
+<div class="primary-header">
+    <mat-card class="profile-header">
+        <div class="cover-photo"
+            *ngIf="identity.organisation.cover_picture.id"
+            [ngStyle]="{
+                'background-image' : 'url(' + identity.organisation.cover_picture.src + ')'
+            }">
+        </div>
+        <div class="cover-photo"
+            *ngIf="!identity.organisation.cover_picture.id"
+            style="background-image: url('/assets/placeholders/placeholder-org-cover.jpg')">
+        </div>
+        <mat-card-content class="profile-content">
+
+            <img mat-card-avatar class="profile-avatar large" *ngIf="identity.user.avatar.id"
+                 [src]="identity.user.avatar.src"/>
+            <img mat-card-avatar class="profile-avatar large" *ngIf="!identity.user.avatar.id"
+                 src="/assets/placeholders/placeholder-avatar.jpg"/>
+
+            <h3>{{identity.user.displayName()}}</h3>
+            <div class="profile-assigned-teams">
+                <span *ngFor="let team of teams.visibleTeams()">{{ team.team.name }}</span>
+                <span [title]="teams.teamsWithoutVisible()" *ngIf="teams.teamsCountWithoutVisible()">
+                    {{teams.teamsCountWithoutVisible()}} more...
+                </span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="primary-body">
+        <mat-card matRipple class="responsive" (click)="toggleMenu()">
+                <svg-icon src="/assets/icons/hamburger.svg"></svg-icon>
+                <h4>Menu</h4>
+            </mat-card>
+            <nav [@responsiveMenu]="currentState" mat-tab-nav-bar>
+                <a mat-tab-link
+                    routerLink="/profile/statistics/courses"
+                    [ngClass]="{
+                        active: active_tab == 'courses'
+                    }"
+                    [active]="(active_tab == 'courses')">
+                     Courses
+                 </a>
+            </nav>
+    <router-outlet></router-outlet>
+</div>

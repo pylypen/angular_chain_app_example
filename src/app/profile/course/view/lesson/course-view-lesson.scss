@@ -1,0 +1,329 @@
+	/* Lesson View */
+	.lesson-video,
+	.lesson-audio,
+	.lesson-articulate,
+	.lesson-documents,
+	.lesson-description {
+		margin: 25px 0 0;
+	}
+
+	.video-wrapper {
+		height: 0;
+		padding-bottom: 56.25%; /*16:9*/
+		position:relative;
+		.video-player {
+			position:absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.youtube-iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+		vg-controls{
+			z-index: 9 !important;
+			vg-volume{
+				margin-right: 2rem;
+			}
+			vg-time-display{
+				@include flex-horizontal{
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
+
+	}
+	.audio-wrapper {
+		border-bottom: solid $light-gray 1px;
+		margin: 0 0 10px 0;
+		.audio-player {
+			height: 50px;
+		}
+		vg-controls{
+			z-index: 9 !important;
+			vg-volume{
+				margin-right: 2rem;
+			}
+			vg-time-display{
+				@include flex-horizontal{
+					justify-content: center;
+					align-items: center;
+				}
+			}
+		}
+	}
+	.articulate-wrapper{
+		.articulate-placeholder, .articulate iframe{
+			@include flex-vertical{
+				justify-content: center;
+				align-items: center;
+			}
+			width: 100%;
+			height: 30rem;
+			background: black;
+			.placeholder{
+				width: 45%;
+				height: 80%;
+				@include flex-vertical{
+					align-items: center;
+					justify-content: space-around;
+				}
+
+				svg-icon{
+					&.articulate-svg{
+						@include flex-vertical{
+							justify-content: center;
+							align-items: center;
+						}
+						width: 100%;
+						svg{
+							width: 50%;
+						}
+					}
+					&.play{
+						width: fit-content;
+						svg{
+							width: 14rem;
+							height: 14rem;
+							fill: #333333;
+							cursor: pointer;
+							transition: all 0.3s ease-in-out;
+
+						}
+						svg:hover{
+							fill: #fff;
+						}
+					}
+				}
+				span{
+					color: #333333;
+				}
+			}
+		}
+	}
+	.lesson-documents{
+		a{
+			svg-icon{
+				margin-bottom: 1rem;
+			}
+			@include flex-horizontal{
+				align-items: center;
+			}
+			overflow: hidden;
+			max-height: 5rem;
+			text-overflow: ellipsis;
+		}
+	}
+	.lesson-description{
+
+		h1,h2,h3,h4,h5,h6{
+			margin-bottom: 1rem !important;
+		}
+
+		span{
+			font-size: inherit !important;
+			font-weight: inherit !important;
+			line-height: inherit !important;
+		}
+        a {
+            text-decoration: underline;
+        }
+
+	}
+	.media-list {
+		border-top: solid $light-gray 1px;
+		margin: 10px 0 0 0;
+		.mat-list-item {
+			cursor:pointer;
+			@include no-user-select;
+			&:hover {
+				background: $washed-gray;
+			}
+		}
+		&.docs {
+			border-top: none;
+			margin: 0 0 0 0;
+			svg {
+				width: 18px;
+				padding: 0 0;
+				margin: 0 2px 0 0;
+				position:relative;
+				bottom: -7px;
+			}
+
+		}
+		.current {
+			font-weight: bold;
+			&::after {
+				content: "(up now)";
+				color: green;
+				margin: 0 0 0 5px;
+			}
+		}
+		svg {
+			width: 18px;
+			padding: 4px 0 0;
+			margin: 0 5px 0 0;
+		}
+	}
+	.lesson-navigation {
+		@include flex-horizontal{
+			justify-content: center;
+			align-items: center;
+		};
+		width: 100%;
+		margin: 0 0 0.5rem;
+			.prev, .next{
+			flex: 1 1 auto;
+			-ms-flex: 1 1 auto;
+			border: $light-gray solid 1px;
+			line-height: 35px;
+			text-align:center;
+			cursor:pointer;
+			background: white;
+			max-height: 5rem;
+			&.disabled {
+				color: $light-gray;
+				cursor: not-allowed;
+				&:hover {
+					background: white;
+					color: $light-gray;
+					border: $light-gray solid 1px;
+				}
+			}
+			&:hover {
+				background: $brand-primary;
+				color: white;
+				border: $brand-primary solid 1px;
+			}
+		}
+	}
+	.lesson-playlist {
+		mat-list {
+			mat-list-item {
+				&.current {
+					border-left: $brand-primary solid 2px;
+					font-weight: bold;
+				}
+			}
+		}
+	}
+	.comments-module-wrapper {
+		background: white;
+		.comments-header-row {
+			@include flex-horizontal;
+			background: $brand-secondary;
+			color: white;
+			padding: 10px 20px;
+			div:first-child {
+				flex: 1 1 auto;
+				-ms-flex: 1 1 auto;
+			}
+			div:last-child {
+				flex: 5 5 auto;
+				-ms-flex: 4 4 auto;
+			}
+		}
+		.comments-list {
+			.comments-entry {
+				.comment-toolbar {
+					@include flex-horizontal{
+						align-items: center;
+					};
+					background: $washed-gray;
+					padding: 10px 10px 10px 20px;
+					border-bottom: $washed-gray solid 1px;
+					div:first-child {
+						flex: 8 8 auto;
+						-ms-flex: 9 9 auto;
+					}
+					div:last-child {
+						flex: 4 4 auto;
+						-ms-flex: 1 1 auto;
+					}
+					.comment-timestamp {
+						color: $middle-gray;
+					}
+					.comment-actions {
+						@include flex-horizontal{
+							justify-content: space-around;
+						}
+						text-align:right;
+						a {
+							color: $brand-primary;
+							margin: 0 0 0 5px;
+							cursor:pointer;
+						}
+					}
+				}
+				.comment-content {
+					@include flex-horizontal;
+					@include mq('phablet', max){
+						@include flex-vertical;
+					}
+					border-bottom: $light-gray solid 1px;
+					> div:nth-child(1) {
+						flex: 0 0 12rem;
+						-ms-flex: 0 0 12rem;
+					}
+					> div:nth-child(2){
+						flex: 3 3 auto;
+						-ms-flex: 3 3 auto;
+						width: 65%;
+					}
+					> div:nth-child(3){
+						flex: 0 0 3rem;
+						-ms-flex: 0 0 3rem;
+					}
+					.comment-member-wrapper {
+						@include mq('phablet', max){
+							border-bottom: 1px solid $light-gray;
+						}
+						padding: 1.5rem;
+						.mat-card {
+							text-align:center;
+							border: none;
+							padding: 10px 0;
+							.mat-card-avatar {
+								margin: 0 0 10px 0;
+								height: 80px;
+								width: 80px;
+							}
+						}
+					}
+					.comment-message {
+						@include mq('phablet', max){
+							width: 100% !important;
+						}
+						padding: 2.5rem 1.5rem 1.5rem;
+						color: $middle-gray;
+						.mat-form-field {
+							textarea {
+								width: 100%;
+								height: 75px;
+							}
+						}
+						button{
+							margin-top: 1rem;
+						}
+
+						&.read {
+							span.message{
+								font-weight: 400;
+								span {
+									font-weight: 800;
+								}
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}

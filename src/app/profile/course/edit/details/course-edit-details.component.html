@@ -1,0 +1,140 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/courses" class="naked-link">← Back to Courses List</a>
+    </div>
+    <div class="action-buttons">
+        <a mat-button color="accent" href="/profile/course/{{course.id}}/preview" target="_blank">Preview</a>
+    </div>
+</div>
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Details</h4>
+        <p>Change information about your course.</p>
+    </div>
+    <div>
+        <mat-card>
+            <div class="settings-form-field-wrapper">
+                <mat-form-field color="accent">
+                    <input matInput [(ngModel)]="course.name" type="text" placeholder="Course name">
+                </mat-form-field>
+                <mat-error *ngIf="errors.name.display">{{errors.name.message}}</mat-error>
+
+                <mat-form-field color="accent">
+                    <input matInput [(ngModel)]="course.subtitle" type="text" placeholder="Subtitle">
+                </mat-form-field>
+                <mat-error *ngIf="errors.subtitle.display">{{errors.subtitle.message}}</mat-error>
+
+                <mat-form-field color="accent">
+                            <textarea [(ngModel)]="course.description" matInput placeholder="Description"
+                                      matTextareaAutosize matAutosizeMinRows="5"
+                                      matAutosizeMaxRows="10"></textarea>
+                </mat-form-field>
+                <mat-error *ngIf="errors.description.display">{{errors.description.message}}</mat-error>
+
+            </div>
+        </mat-card>
+    </div>
+</div>
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Branding</h4>
+        <p>Brand your course by setting a custom thumbnail logo and a featured background.</p>
+    </div>
+    <div>
+        <mat-card>
+            <h5><strong>Thumbnail</strong></h5><br/>
+            <div class="multi-column four-one">
+                <div *ngIf="course.thumbnail.src">
+                    <img class="editcourse-image" [src]="course.thumbnail.src"/>
+                </div>
+                <div *ngIf="!course.thumbnail.src">
+                    <img class="editcourse-image" src="/assets/placeholders/placeholder-course.jpg"/>
+                </div>
+                <div>
+
+
+                    <button mat-raised-button class="labelButton" color="primary"><label for="thumbnail-uploader">{{(course.thumbnail.id) ? 'Replace' : 'Upload'}} </label></button>
+                    <input type="file" (change)="fileChangeEvent($event, 'thumbnail')" id="thumbnail-uploader"
+                           style="display:none"/>
+
+                    <br/>
+                    <button mat-raised-button color="primary">Remove</button>
+                    <br/><br/>
+                    <p>Recommended format:</p>
+                    <ul>
+                        <li>
+                            JPG or PNG
+                        </li>
+                        <li>
+                            <em>Minimum 400px wide by at least 200px tall</em>.
+                        </li>
+                        <li>
+                            <em>Recommended size is 800px wide by at least 400px tall</em>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br/>
+            <mat-divider></mat-divider>
+            <br/>
+            <h5><strong>Featured background</strong></h5><br/>
+            <div class="multi-column four-one">
+                <div *ngIf="course.featured_background.src">
+                    <img class="editcourse-image" [src]="course.featured_background.src" width="600px" height="140px"/>
+                </div>
+                <div *ngIf="!course.featured_background.src">
+                    <img class="editcourse-image" src="/assets/placeholders/courses-header.jpg" width="600px" height="140px"/>
+                </div>
+                <div>
+
+                    <button color="primary" class="labelButton" mat-raised-button>
+                        <label for="featured-bg-uploader">
+                            {{(course.featured_background.id) ? 'Replace' : 'Upload'}}
+                        </label>
+                    </button>
+                    <input type="file" (change)="fileChangeEvent($event, 'cover')" id="featured-bg-uploader"
+                           style="display:none"/>
+
+                    <br/>
+                    <button mat-raised-button color="primary">Remove</button>
+                    <br/><br/>
+                    <p>Recommended format:</p>
+                    <ul>
+                        <li>
+                            JPG or PNG
+                        </li>
+                        <li>
+                            <em>Minimum 1300px wide by at least 300px tall</em>.
+                        </li>
+                        <li>
+                            <em>Recommended size is 2600px wide by at least 600px tall</em>.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Delete</h4>
+        <p>Permanently delete call course content including student enrollment records.</p>
+    </div>
+    <div>
+        <mat-card>
+            <button mat-button color="warn" (click)="deleteCourse()">Delete course</button>
+            <div *ngIf="delete_errors.course.display">{{delete_errors.course.message}}</div>
+        </mat-card>
+    </div>
+</div>
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Save</h4>
+    </div>
+    <div>
+        <mat-card>
+          <button mat-raised-button color="primary" (click)="saveDetails()">Save</button>
+        </mat-card>
+    </div>
+</div>

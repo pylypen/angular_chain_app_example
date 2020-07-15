@@ -1,0 +1,368 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/course/{{course.id}}/edit/curriculum" class="naked-link">← Back to Curriculum</a>
+    </div>
+    <div class="action-buttons">
+        <a mat-button color="accent" href="/profile/course/{{course.id}}/preview" target="_blank">Preview</a>
+    </div>
+</div>
+<div class="text-header">
+    <h3>Basic Info</h3>
+    <mat-divider></mat-divider>
+</div>
+
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>General information</h4>
+    </div>
+    <div>
+        <mat-card>
+
+            <mat-form-field color="accent">
+                <input matInput [(ngModel)]="lesson.name" type="text" placeholder="Lesson name">
+                <mat-error *ngIf="errors.name.display">{{errors.name.message}}</mat-error>
+            </mat-form-field>
+
+            <div>
+                <angular-editor [placeholder]="'Enter text here...'" [config]="editor_config" [(ngModel)]="lesson.description"></angular-editor>
+                <div *ngIf="errors.description.display">{{errors.description.message}}</div>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
+<div class="text-header">
+    <h3>Set and Upload Media</h3>
+    <mat-divider></mat-divider>
+</div>
+<section class="multi-column one-four row-loose lesson-content-order">
+    <div>
+        <h4>Content Order</h4>
+        <p>Select and arrange content for your lesson.</p>
+    </div>
+    <div class="multi-column order-columns">
+        <mat-card class="content-section">
+            <h4 class="title">Available Media</h4>
+            <p>Drag into the Selected column to include in your lesson.</p>
+            <section *ngIf="save_order_request.library" [(dragulaModel)]="save_order_request.library" dragula="content_order" class="draggable">
+                <mat-card matRipple *ngFor="let media of save_order_request.library" matTooltip="Drag and drop this block to change order of media in this lesson" class="media-item">
+                    <svg-icon *ngIf="media.name === 'Video'" class="media-icon" src="/assets/icons/video.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Embed'" class="media-icon" src="/assets/icons/youtube.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Audio'" class="media-icon" src="/assets/icons/audio.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Document'" class="media-icon" src="/assets/icons/file.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Articulate'" class="media-icon" src="/assets/icons/articulate.svg"></svg-icon>
+                    <h4 class="media-info">
+                        {{media.name == 'Embed' ? 'Video embed' : media.name == 'Video' ? 'Video upload' : media.name}}
+                    </h4>
+                </mat-card>
+                <ng-container *ngIf="!save_order_request.library.length">
+                    <mat-card dragula="undraggable" matRipple matTooltip="Drag any media here" class="media-item empty undraggable">
+                        <h4 class="media-info">
+                            Drag here to remove
+                        </h4>
+                    </mat-card>
+                </ng-container>
+            </section>
+        </mat-card>
+        <mat-card class="content-section">
+            <h4 class="title">Selected Media</h4>
+            <p>Order content by dragging it around.</p>
+            <section *ngIf="save_order_request.uses" [(dragulaModel)]="save_order_request.uses" dragula="content_order" class="draggable">
+                <mat-card matRipple *ngFor="let media of save_order_request.uses; let i = index" matTooltip="Drag and drop this block to change order of media in this lesson" class="media-item">
+                    <svg-icon *ngIf="media.name === 'Video'" class="media-icon" src="/assets/icons/video.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Embed'" class="media-icon" src="/assets/icons/youtube.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Audio'" class="media-icon" src="/assets/icons/audio.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Document'" class="media-icon" src="/assets/icons/file.svg"></svg-icon>
+                    <svg-icon *ngIf="media.name === 'Articulate'" class="media-icon" src="/assets/icons/articulate.svg"></svg-icon>
+                    <h4 class="media-info">
+                        {{media.name == 'Embed' ? 'Video embed' : media.name == 'Video' ? 'Video upload' : media.name}}
+                    </h4>
+                    <h6 class="badge">{{i + 1}}</h6>
+                </mat-card>
+                <ng-container *ngIf="!save_order_request.uses.length">
+                    <mat-card matRipple matTooltip="Drag any media here from library to go" class="media-item empty undraggable">
+                        <h4 class="media-info">
+                            Drag here to add
+                        </h4>
+                    </mat-card>
+                </ng-container>
+            </section>
+        </mat-card>
+    </div>
+</section>
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Add Media</h4>
+        <p>Upload media files to a lesson</p>
+    </div>
+    <div>
+        <mat-card>
+
+            <div ng2FileDrop [uploader]="media_uploader" class="drop-file-container">
+                <label for="media_files"> <strong>Click to upload video files, audio files, PDFs, and docs here.</strong><br/>
+                    .mp4, .ogv, .webm, .mp3, .doc, .docx, .pdf, and Articulate zip files are supported.</label>
+            </div>
+
+            <input multiple type="file" ng2FileSelect [uploader]="media_uploader" id="media_files"
+                   style="display:none"/>
+
+            <mat-list *ngIf="media_uploader && media_uploader.queue?.length">
+                <ng-container *ngFor="let item of media_uploader.queue">
+                    <mat-list-item>
+                        <h3 matLine>{{item.file.name}}</h3>
+                        <p matLine>
+                            <span>
+                                <ng-container *ngIf="media_uploader.options.isHTML5">
+                                    {{ item?.file?.size/1024/1024 | number:'.2' }} MB ·
+                                </ng-container>
+                                <ng-container *ngIf="item.isReady && !item.isUploading">
+                                    Ready
+                                </ng-container>
+                                <ng-container *ngIf="item.isUploading">
+                                    Uploading
+                                </ng-container>
+                                <ng-container *ngIf="item.isError">
+                                    Error
+                                </ng-container>
+                                <ng-container *ngIf="item.isSuccess">
+                                    Success
+                                </ng-container>
+                            </span>
+                        </p>
+                        <mat-progress-bar color="primary" mode="determinate" [value]="item.progress"></mat-progress-bar>
+                        <button mat-button color="warn" (click)="removeUploaderQueueItem(item)">Cancel</button>
+                    </mat-list-item>
+
+                    <mat-list-item>
+                        <div *ngIf="media_errors[item.file.name] && media_errors[item.file.name].file.display"
+                             [innerHTML]="media_errors[item.file.name].file.message">
+                        </div>
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+                </ng-container>
+            </mat-list>
+        </mat-card>
+    </div>
+</div>
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Add a Youtube Video</h4>
+        <p>Paste a share link from Youtube to embed it.</p>
+    </div>
+    <div>
+        <mat-card>
+            <div>
+                <mat-form-field color="accent">
+                    <input matInput type="text" [(ngModel)]="youtube_media.src" placeholder="Youtube share link goes here">
+                </mat-form-field>
+                <mat-error *ngIf="youtube_errors.src.display">
+                    {{youtube_errors.src.message}}
+                </mat-error>
+                <button mat-raised-button color="primary" (click)="addYoutubeMedia()">Add link</button>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+
+
+
+<div class="text-header">
+    <h3> Uploaded media </h3>
+    <mat-divider></mat-divider>
+</div>
+
+<section class="lesson-content">
+        <div class="multi-column one-four row-loose">
+                <div>
+                    <h4>Video Media</h4>
+                </div>
+                <div>
+                    <mat-card>
+                        <div *ngIf="lesson.video_media.length">
+                            <mat-list>
+                                <ng-container *ngFor="let media of lesson.video_media">
+                                    <mat-list-item *ngIf="media.media_extension.media_type.name != 'Embed'">
+                                        <svg-icon [matTooltip]="media.media_extension.media_mime" src="/assets/icons/video.svg"></svg-icon>&nbsp;
+                                        {{media.name}}
+                                        &nbsp;&nbsp;
+                                        <a [routerLink]="" class="warn" (click)="deleteMedia(media.id)">
+                                            Delete 
+                                        </a>
+                                    </mat-list-item>
+                                </ng-container>
+                            </mat-list>
+                        </div>
+            
+                        <div *ngIf="!lesson.video_media.length">
+                            <div>
+                                Lesson has no video content. Use the uploader above to add some.
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        <div class="multi-column one-four row-loose">
+                <div>
+                    <h4>Audio Media</h4>
+                </div>
+                <div>
+                    <mat-card>
+                        <div *ngIf="lesson.audio_media.length">
+                            <mat-list>
+                                <mat-list-item *ngFor="let media of lesson.audio_media">
+                                    <svg-icon [matTooltip]="media.media_extension.media_mime" src="/assets/icons/audio.svg"></svg-icon>
+
+                                    {{media.name}}
+                                    &nbsp;&nbsp;
+                                    <a [routerLink]="" class="warn" (click)="deleteMedia(media.id)">
+                                        Delete 
+                                    </a>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+            
+                        <div *ngIf="!lesson.audio_media.length">
+                            <div>
+                                Lesson has no audio content. Use the uploader above to add some.
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+            </div>
+        
+        <div class="multi-column one-four row-loose">
+            <div>
+                <h4>Documents</h4>
+            </div>
+            <div>
+                <mat-card>
+                    <div *ngIf="lesson.document_media.length">
+                        <mat-list>
+                            <mat-list-item *ngFor="let media of lesson.document_media">
+                                <svg-icon [matTooltip]="media.media_extension.media_mime" src="/assets/icons/file.svg"></svg-icon>
+                                &nbsp;&nbsp; {{media.name}} &nbsp;&nbsp;
+                                <a [routerLink]="" class="warn" (click)="deleteMedia(media.id)">
+                                    Delete 
+                                </a>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+        
+                    <div *ngIf="!lesson.document_media.length">
+                        <div>
+                            Lesson has no documents. Use the uploader above to add some.
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        
+        
+        <div class="multi-column one-four row-loose">
+            <div>
+                <h4>Articulate</h4>
+            </div>
+            <div>
+                <mat-card>
+                    <div *ngIf="lesson.articulate_media.length">
+                        <mat-list>
+                            <mat-list-item *ngFor="let media of lesson.articulate_media">
+                                <svg-icon [matTooltip]="media.media_extension.media_mime" src="/assets/icons/articulate.svg"></svg-icon>
+                                &nbsp;&nbsp; {{media.name}} &nbsp;&nbsp;
+                                <a [routerLink]="" class="warn" (click)="deleteMedia(media.id)">
+                                    Delete
+                                </a>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+        
+                    <div *ngIf="!lesson.articulate_media.length">
+                        <div>
+                            Lesson has no Articulate content. Use the uploader above to add some.
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    
+        <div class="multi-column one-four row-loose">
+            <div>
+                <h4>Youtube Videos</h4>
+            </div>
+            <div>
+                <mat-card>
+                    <div *ngIf="lesson.embed_youtube_media.length">
+                        <mat-list>
+                            <mat-list-item class="overHide" *ngFor="let media of lesson.embed_youtube_media">
+                                <svg-icon [matTooltip]="media.name" src="/assets/icons/youtube.svg"></svg-icon>
+                                &nbsp;&nbsp; 
+                                {{media.shortName()}}&nbsp;-&nbsp;<a [routerLink]="" class="warn" (click)="deleteYoutubeMedia(media.id)"> Delete </a>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+        
+                    <div *ngIf="!lesson.embed_youtube_media.length">
+                        <mat-list>
+                            <mat-list-item>
+                                Lesson has no embedded Youtube content. Use the form above to add some.
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+</section>
+
+
+
+
+
+
+
+<div class="text-header">
+    <h3> Settings </h3>
+    <mat-divider></mat-divider>
+</div>
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Comments</h4>
+    </div>
+    <div>
+        <mat-card>
+            <mat-slide-toggle color="primary" [(ngModel)]="lesson.allow_comments"> Allow comments</mat-slide-toggle>
+        </mat-card>
+    </div>
+</div>
+
+
+
+
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Delete Lesson</h4>
+        <p>Permanently delete lesson content including media files. Cannot be undone.</p>
+    </div>
+    <div>
+        <mat-card>
+            <button mat-button color="warn" (click)="deleteLesson()">Delete lesson</button>
+        </mat-card>
+    </div>
+</div>
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Save Lesson</h4>
+        <p>Save this lesson.</p>
+    </div>
+    <div>
+        <mat-card>
+            <button mat-raised-button (click)="updateLesson()" color="primary">Save</button>
+        </mat-card>
+    </div>
+</div>

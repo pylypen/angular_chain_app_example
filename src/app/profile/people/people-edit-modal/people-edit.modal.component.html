@@ -1,0 +1,58 @@
+<h1 mat-dialog-title class="primary-color">Update User</h1>
+<mat-dialog-content class="accent-color">
+
+    <mat-form-field color="accent">
+        <input [(ngModel)]="user.email" disabled matInput type="text"
+               placeholder="Primary Email">
+    </mat-form-field>
+
+    <mat-form-field color="accent">
+        <input [(ngModel)]="request.contact_email" matInput type="text"
+               placeholder="Contact Email">
+    </mat-form-field>
+    <mat-error *ngIf="errors.contact_email.display">
+        {{errors.contact_email.message}}
+    </mat-error>
+    <mat-form-field color="accent">
+        <input [(ngModel)]="request.first_name" matInput type="text"
+               placeholder="First Name">
+    </mat-form-field>
+    <mat-error *ngIf="errors.first_name.display">
+        {{errors.first_name.message}}
+    </mat-error>
+
+    <mat-form-field color="accent">
+        <input [(ngModel)]="request.last_name" matInput type="text"
+               placeholder="Last Name">
+    </mat-form-field>
+    <mat-error *ngIf="errors.last_name.display">
+        {{errors.last_name.message}}
+    </mat-error>
+
+    <mat-form-field color="accent">
+        <input [(ngModel)]="request.phone_number" matInput type="text"
+               placeholder="Phone Number">
+    </mat-form-field>
+    <mat-error *ngIf="errors.phone_number.display">
+        {{errors.phone_number.message}}
+    </mat-error>
+
+    <mat-form-field color="accent">
+        <input matInput [matDatepicker]="datepicker" [(ngModel)]="request.birthday"
+               placeholder="Birthday" disabled>
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+        <mat-error *ngIf="errors.birthday.display">
+            {{errors.birthday.message}}
+        </mat-error>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="warn" mat-dialog-close>
+        Cancel
+    </button>
+    <button mat-raised-button color="primary" (click)="updateUser()">
+        Update
+    </button>
+</mat-dialog-actions>

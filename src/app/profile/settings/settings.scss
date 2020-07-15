@@ -1,0 +1,182 @@
+@import "../../mixins.scss";
+@import "../../variables.scss";
+
+.account-settings{
+
+    .primary-body{
+        
+        .settings{
+            .subnav-container{
+                .subnav{
+                    .navlist a{
+                        position: relative;
+                        span{
+                            display: block;
+                            left: 100%;
+                            @include mq('tablet-wide', max){
+                                left: 90%;
+                            }
+                        }
+                    }
+                    overflow: hidden;
+                    @include mq('tablet', max){
+                        height: 0rem;
+                        padding: 0px;
+                    }
+                }
+                .subnavResponsive{
+                    position: relative;
+                    display: none;
+                    cursor: pointer;
+                    @include mq('tablet', max){
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    svg-icon{
+                        position: absolute;
+                        top: calc(50% - 1.5rem);
+                        left: 5%;
+                        height: 3rem;
+                        width: 3rem;
+                    }
+                }
+            }
+            width: 100%;
+            @include flex-horizontal{
+                justify-content: space-around;
+            };
+            @include mq('tablet-wide', max){
+                @include flex-vertical;
+            }
+
+            .routerSettings{
+                margin-top: 2rem;
+                width: 60%;
+                @include mq('tablet-wide', max){
+                    width: 100%;
+                }
+
+                .developers_settings{
+                    .mat-form-field{
+                        width: 60%;
+                    }
+                    button{
+                        height: 50%;
+                    }
+                    @include flex-horizontal{
+                        justify-content: space-around;
+                        align-items: center;
+                    }
+                    @include mq('phablet', max){
+                        display: flex;
+                        flex-direction: column;
+                        .mat-form-field{
+                            width: 100%;
+                            margin-bottom: 3rem;
+                        }
+                    }
+
+                }
+                .developers_table{
+                    margin-top: 2rem;
+                }
+
+                .subscription-tiers{
+                    .tier-card {
+                        @include flex-horizontal;
+                        align-items: center;
+                        margin: 1.5rem 0 0;
+                        border-radius: 1rem;
+                        padding: 1rem;
+                        width: 100%;
+                        cursor: pointer;
+                        .tier-name {
+                            align-self: flex-start;
+                            flex: 1 1 auto;
+                            -ms-flex: 1 1 auto;
+                            margin: auto;
+                        }
+                        .price{
+                          color: $brand-secondary;
+                            flex: 0 1 20%;
+                            -ms-flex: 0 1 20%;
+                            text-align: center;
+                            margin: auto !important;
+                        }
+                        .selected, .un-selected {
+                            flex: 0 0 50px;
+                            -ms-flex: 0 0 50px;
+                            text-align: center;
+                            margin: auto;
+                        }
+                        &:last-child{
+                            margin-bottom: 1.5rem;
+                        }
+                        .payment-form {
+                            width: 100%;
+                            .errors{
+                                @include flex-vertical{
+                                    margin-top: 1rem;
+                                    align-items: center;
+                                }
+                            }
+                            .payment-card {
+                                margin: 2rem 0;
+                                width: 100%;
+                                .expiryDateSlash{
+                                    @include flex-horizontal{
+                                        justify-content: center;
+                                        align-items: center;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                .settings-form-field-wrapper {
+                    padding: 25px 10px 0 0 !important;
+                }
+                
+                .edit-profile-avatar-container {
+                    text-align:center;
+                    border: none;
+                    background: transparent !important;
+                    .edit-profile-avatar {
+                        height: 10rem !important;
+                        width: 10rem !important;
+                        border: $brand-primary solid 0.25rem;
+                        background: url('/assets/placeholders/placeholder-avatar.png') no-repeat center;
+                        background-size: cover;
+                        margin: 1.5rem auto;
+                        box-sizing: border-box;
+                    }
+                
+                    .edit-profile-cover {
+                        height: 10rem !important;
+                        width: 25rem !important;
+                        border: $brand-primary solid 4px;
+                        background: url('/assets/placeholders/test-cover.png') no-repeat center;
+                        background-size: cover;
+                        margin: 1.5rem auto;
+                        border-radius: 5px;
+                        box-sizing: border-box;
+                
+                    }
+                
+                    .edit-profile-avatar, .edit-profile-cover {
+                        &:hover {
+                            border: $brand-primary solid 7px;
+                        }
+                    }
+                }
+
+            }
+            .multi-column{
+                justify-content: space-between;
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+<mat-sidenav-container class="profile-wrapper">
+    <mat-toolbar class="toolbar">
+        <profile-header></profile-header>
+    </mat-toolbar>
+    <profile-sidebar-left></profile-sidebar-left>
+    <!--<mat-sidenav-content class="primary-layout"> -->
+    <div class="primary-layout">
+        <spinner-global></spinner-global>
+        <router-outlet></router-outlet>
+    </div>
+    <!--</mat-sidenav-content> -->
+    <div id="intercom"></div>
+</mat-sidenav-container>

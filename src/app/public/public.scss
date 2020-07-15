@@ -1,0 +1,42 @@
+@import "../variables.scss";
+@import "../mixins.scss";
+@import "../forms.scss"; // <<<<< Forms are here
+
+
+.public-wrapper { // Forms wrapper
+  width: 100%;
+  margin: auto;
+  background: $washed-gray;
+  @include flex-vertical{
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .public-logo{ // Logo LearnHub on the top of page
+    margin: 4rem auto 3rem auto;
+    text-align: center;
+    svg {
+      width: 200px;
+      @include mq('phone', max){
+        width: 70%;
+      }
+    }
+  }
+
+  .router-content { // Router content in the middle of page
+    min-width: 20%;
+    margin-top: 3rem;
+    @include mq('tablet', max){
+      max-width: 100%;
+      width: 100%;
+    }
+    .mat-card{
+      padding: 2.5rem 2.5rem 4rem 2.5rem !important;
+    }
+  }
+}
+
+
+
+
+

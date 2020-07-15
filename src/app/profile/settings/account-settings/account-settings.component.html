@@ -1,0 +1,103 @@
+<mat-card class="settings-account-settings">
+    <mat-card-title>Account Settings</mat-card-title>
+    <mat-divider></mat-divider>
+    <div class="multi-column halves">
+      <div>
+        <div class="settings-form-field-wrapper">
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Organization Name"
+                       [(ngModel)]="account_settings.name">
+            </mat-form-field>
+            <mat-error *ngIf="errors.name.display">
+                {{errors.name.message}}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Organization Email"
+                       [(ngModel)]="account_settings.email">
+            </mat-form-field>
+            <mat-error *ngIf="errors.email.display">
+                {{errors.email.message}}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Organization Phone Number"
+                       [(ngModel)]="account_settings.phone_number">
+            </mat-form-field>
+            <mat-error *ngIf="errors.phone_number.display">
+                {{errors.phone_number.message}}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Organization State"
+                       [(ngModel)]="account_settings.state">
+            </mat-form-field>
+            <mat-error *ngIf="errors.state.display">
+                {{errors.state.message}}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Organization City"
+                       [(ngModel)]="account_settings.city">
+            </mat-form-field>
+            <mat-error *ngIf="errors.city.display">
+                {{errors.city.message}}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Organization Street Address"
+                       [(ngModel)]="account_settings.street">
+            </mat-form-field>
+            <mat-error *ngIf="errors.street.display">
+                {{errors.street.message}}
+            </mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Organization ZIP"
+                       [(ngModel)]="account_settings.zip">
+            </mat-form-field>
+            <mat-error *ngIf="errors.zip.display">
+                {{errors.zip.message}}
+            </mat-error>
+
+            <!-- billing info: not part of mvp -->
+
+            <!-- subscription info: not part of mvp -->
+
+        </div>
+      </div>
+        <div>
+            <mat-card class="edit-profile-avatar-container">
+
+                <label for="uploader-logo">
+                    <img mat-card-avatar class="edit-profile-avatar large" *ngIf="account_settings.logo.src" [src]="account_settings.logo.src"/>
+                    <img mat-card-avatar class="edit-profile-avatar large" *ngIf="!account_settings.logo.src" src="/assets/placeholders/placeholder-avatar.jpg"/>
+                    <h5>Change organization logo</h5>
+                </label>
+                <input type="file" (change)="fileChangeEvent($event, 'avatar')" id="uploader-logo" style="display:none"/>
+                <p>Click on the image to select a new photo from your computer.<br/>
+                    <em>Minimum 150px by 150px. Recommended size is 300px by 300px.</em>.
+                </p>
+            </mat-card>
+
+            <mat-card class="edit-profile-avatar-container">
+
+                <label for="uploader-cover-picture">
+                    <img class="edit-profile-cover" *ngIf="account_settings.cover_picture.src" [src]="account_settings.cover_picture.src"/>
+                    <img class="edit-profile-cover" *ngIf="!account_settings.cover_picture.src" src="/assets/placeholders/placeholder-org-cover.jpg"/>
+                    <h5>Change organization cover image</h5>
+                </label>
+                <input type="file" (change)="fileChangeEvent($event, 'cover')" id="uploader-cover-picture" style="display:none"/>
+
+                <p>Click on the image to select a new photo from your computer.<br/>
+                    <em>Minimum 1300px wide by at least 300px tall. Recommended size is 2600px wide by at least 600px tall</em>.
+                </p>
+            </mat-card>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+    <button mat-raised-button (click)="submit_account_settings()" color="primary">Save Changes</button>
+    </mat-card-actions>
+</mat-card>

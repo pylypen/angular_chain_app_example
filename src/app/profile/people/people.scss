@@ -1,0 +1,8 @@
+@import "../../mixins.scss";
+.people-actions{
+    width: 35%;
+    margin-bottom: 2rem;
+    .mat-form-field{
+        margin-top: 1rem;
+    }
+}

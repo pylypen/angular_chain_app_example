@@ -1,0 +1,81 @@
+<mat-card class="settings-developers-api">
+    <mat-card-title>Developers Accounts</mat-card-title>
+    <mat-divider></mat-divider>
+    <div class="one-column">
+        <div class="settings-form-field-wrapper developers_settings">
+            <mat-form-field color="accent">
+                <input [(ngModel)]="add_acc_request.acc_key" matInput type="text" placeholder="Account key">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="addAccount()"> Add</button>
+        </div>
+        <mat-error *ngIf="add_acc_errors.acc_key.display">{{add_acc_errors.acc_key.message}}</mat-error>
+
+        <!-- <mat-divider></mat-divider> -->
+
+    </div>
+</mat-card>
+
+<mat-card *ngIf="accs.length" class="developers_table">
+    <mat-table #table [dataSource]="accs_ds" class="developers_accounts">
+
+        <!-- Avatar Column -->
+        <ng-container matColumnDef="issued_to">
+            <mat-header-cell *matHeaderCellDef>Account Holder</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{element.issued_to}}
+            </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
+        </ng-container>
+
+        <!-- Last Login Column -->
+        <ng-container matColumnDef="access_used">
+            <mat-header-cell *matHeaderCellDef>Access Used</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+
+                <ng-container *ngIf="element.org_token_issued_at">
+                    <span>{{element.org_token_issued_at.toLocaleDateString()}}</span>
+                </ng-container>
+
+                <ng-container *ngIf="!element.org_token_issued_at">
+                    <span>N/A</span>
+                </ng-container>
+
+            </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="account_key">
+            <mat-header-cell *matHeaderCellDef>Account Key</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <div class="icon" (click)="copy('key')">
+                    <svg-icon src="/assets/icons/copy.svg"></svg-icon>
+                </div>
+                <span id="key" #key>{{element.acc_key}}</span>
+                
+            </mat-cell>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <div class="button-row">&nbsp;
+                    <a class="warn" (click)="deleteAccount(element.acc_key)">Delete</a>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</mat-card>
+
+
+<mat-card *ngIf="!accs.length" class="developers_table">
+    <span>You have not yet added any Developers Accounts!</span>
+</mat-card>

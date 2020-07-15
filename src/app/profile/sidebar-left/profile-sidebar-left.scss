@@ -1,0 +1,225 @@
+@import "../../mixins.scss";
+@import "../../variables.scss";
+
+.main-menu {
+	min-width: 0;
+	background: white;
+	overflow: hidden !important;
+	z-index: 1000 !important;
+	visibility: visible !important;
+	transform: none !important;
+    transition: all .1s linear;
+    .mat-drawer-inner-container{
+        overflow: hidden !important;
+    }
+	&.opened{
+		width: 240px;
+		.logo-container{
+			.opened{
+				width: 80%;
+				margin-top: 0.5rem;
+			}
+			.collapsed{
+				display: none;
+			}
+		}
+	}
+	&.closed{
+		width: 70px;
+		.logo-container{
+            &.loading{
+                .dark-blue {
+					animation: sk-rotate .5s ease-in-out infinite ;
+					animation-delay: 0.3s;
+				}
+				.yellow {
+					animation: sk-rotate .5s ease-in-out infinite;
+					animation-delay: 0.5s;
+				}
+				.light-blue {
+					animation: sk-rotate .5s ease-in-out infinite;
+					animation-delay: 0.7s;
+				}
+            }
+		}
+	}
+	&.unlabeled{
+		& > .mat-drawer-inner-container .menu-option-entry .label {
+			display: none !important;
+		}
+		.logo-container {
+			.collapsed{
+				width: 60% !important;
+				margin: 0.5rem 0.8rem 0 !important;
+				.dark-blue {
+					fill: #2C3E50;
+				}
+				.yellow {
+					fill: #F0C419;
+				}
+				.light-blue {
+					fill: #2880BA;
+				}
+			}
+			.opened{
+				display: none;
+			}
+		}
+
+	}
+	@include mq('tablet', max){
+		width: 64px !important;
+		position: fixed !important;
+		height: 5rem !important;
+		background: $brand-secondary !important;
+		.menu-option-entry {
+			min-width: 64px;
+		}
+		&.responsive{
+			width: 100% !important;
+
+			.menu-option-entry {
+				min-width: 0;
+			}
+			& > .mat-drawer-inner-container{
+				height: 100%;
+				padding: 0;
+				a{
+					height: 100%;
+					@include flex-horizontal{
+						justify-content: center;
+						align-items: center;
+					}
+				}
+			}
+			& > .mat-drawer-inner-container .menu-option-entry .label {
+				display: none !important;
+			}
+			& > .logo-container {
+				padding: 0 3px;
+			}
+			& > .logo-container .logo_split_1 {
+				margin: 5px 5px;
+				svg {
+					width: 53px;
+				}
+			}
+			& > .logo-container .logo_split_2 {
+				visibility: collapse;
+			}
+		}
+	}
+	.logo-container {
+		width: 100%;
+		background: white;
+		height: 5rem;
+		@include flex-horizontal{
+			justify-content: center;
+			align-items: center;
+		};
+		@include mq('tablet', max){
+			display: none !important;
+		}
+		.logo_split_1 {
+			flex: 0 1 23%;
+			-ms-flex: 0 1 23%;
+			height: 50px;
+			margin: 5px auto;
+			path, polygon {
+				fill: white;
+			}
+		}
+		.logo_split_2 {
+			flex: 0 1 77%;
+			-ms-flex: 0 1 77%;
+			margin: auto;
+			path {
+				fill: white;
+			}
+		}
+	}
+	.menu-option-container {
+
+		display: flex;
+		display: -ms-flex;
+		flex-direction: column;
+		height: 90vh;
+		overflow:hidden;
+		@include mq('tablet', max){
+			height: 5rem;
+			border: none;
+			@include flex-horizontal{
+				align-items: center;
+			}
+		}
+		.menu-option-entry {
+				display: flex;
+				display: -ms-flex;
+				flex-direction: row;
+				width: 100%;
+				flex: 0 1 auto;
+				padding: 6px 0 2px;
+				color: $type-middle-gray;
+				cursor: pointer;
+				text-decoration: none;
+				@include no-user-select;
+				&.menu-toggle {
+					text-transform: capitalize;
+					@include mq('tablet', max) {
+						display: none;
+					}
+				}
+				&.mobile-toggle{
+					display: none;
+					@include mq('tablet', max){
+						display: inherit;
+					}
+				}
+		    &.active{
+			    background: $brand-primary;
+					color: white;
+					&:hover {
+						color: white;
+					}
+					.icon {
+						svg {
+							path {
+								fill: white;
+							}
+						}
+					}
+		    }
+				.icon {
+					flex: 1 1 25%;
+					box-sizing: border-box;
+					text-align: center;
+					svg {
+						height: 23px;
+						margin:4px auto;
+							path {
+							fill: $icon-default;
+						}
+					}
+				}
+				.label {
+					flex: 4 4 75%;
+					box-sizing: border-box;
+					padding: 4px 0 5px;
+				}
+		}
+	}
+}
+
+
+@keyframes sk-rotate {
+	0% {
+		opacity: 1;
+	}
+	33% {
+		opacity: 0;
+
+	}
+	100% {
+		opacity: 1;
+	}
+}

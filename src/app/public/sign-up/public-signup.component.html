@@ -1,0 +1,44 @@
+<div class="login-form-container">
+    <mat-card>
+        <div class="sign-up-form">
+            <mat-horizontal-stepper (labelPosition)="'bottom'" [linear]="false" #stepper>
+                    <mat-step>
+                            <ng-template matStepLabel>Personal info</ng-template>
+                                <div class="errors">
+                                    <mat-error *ngIf="sign_up_errors.first_name.display">{{sign_up_errors.first_name.message}}</mat-error>
+                                    <mat-error *ngIf="sign_up_errors.last_name.display">{{sign_up_errors.last_name.message}}</mat-error>
+                                    <mat-error *ngIf="sign_up_errors.email.display">{{sign_up_errors.email.message}}</mat-error>
+                                </div>
+                                <mat-form-field> 
+                                    <input matInput [(ngModel)]="sign_up_request.first_name" name="first_name" required>
+                                    <mat-label><mat-icon>person</mat-icon> First name</mat-label>
+                                </mat-form-field>
+                                
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="sign_up_request.last_name" name="last_name" required>
+                                    <mat-label><mat-icon>person</mat-icon> Last name</mat-label>
+                                </mat-form-field>
+                               
+                                <mat-form-field>
+                                    <input matInput [(ngModel)]="sign_up_request.email" name="email" required>
+                                    <mat-label><mat-icon>alternate_email</mat-icon> Email</mat-label>
+                                </mat-form-field>
+                               
+                            <div class="actions">
+                                <button mat-raised-button color="primary" (click)="checkSignUp(sign_up_request)">Next</button>
+                            </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Organization</ng-template>
+                            <mat-error *ngIf="create_organisation_errors.org_name.display">{{create_organisation_errors.org_name.message}}</mat-error>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="create_org_request.org_name" name="org_name" placeholder="Organization name" required>
+                            </mat-form-field>
+                        <div class="actions">
+                            <button mat-raised-button color="primary" (click)="createOrganisation(create_org_request)">Confirm my email</button>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+    </mat-card>
+</div>

@@ -1,0 +1,69 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/courses" class="naked-link">
+            ← Back to Courses List
+        </a>
+        <span *ngIf="page_mode=='lesson' && course.lessons.length > 0">
+                Lesson: {{current_lesson.order}} of {{course.lessons.length}} : {{current_lesson.name}}
+            </span>
+        <span *ngIf="course.lessons.length == 0">
+                    No Lessons are available for this course.
+            </span>
+    </div>
+
+    <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="openApproveSettingsDialog()">Review Options</button>
+    </div>
+</div>
+
+<ng-container *ngIf="page_mode=='lesson'">
+
+    <div *ngIf="course.lessons.length" class="multi-column four-one">
+        <div>
+            <div class="one-column">
+                <div style="padding: 0;">
+                    <div class="multi-column halves lesson-navigation">
+                        <div *ngIf="current_lesson_index != 0" class="prev" (click)="prevLesson()">
+                            « Previous lesson
+                        </div>
+                        <div *ngIf="current_lesson_index < (course.lessons.length - 1)" class="next"
+                             (click)="nextLesson()">
+                            Next lesson »
+                        </div>
+                    </div>
+                </div>
+                <lesson-content *ngIf="page_mode=='lesson'" [data]="current_lesson"></lesson-content>
+            </div>
+        </div>
+        <div>
+
+            <mat-card class="lesson-playlist">
+                <h3>Lessons</h3>
+                <mat-list dense>
+                    <mat-list-item [ngClass]="{'current':(item.id == current_lesson.id)}"
+                                   *ngFor="let item of course.lessons;let $index = index">
+                        <h4 matLine>
+                            <a [routerLink]="" (click)="jumpLesson($index)">
+                                Lesson {{ item.order }} | {{ item.displayName() }}
+                            </a>
+                        </h4>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card>
+
+            <mat-card class="lesson-playlist">
+                <h5>All managed courses</h5>
+                <h6>Review at any time</h6>
+                <mat-list dense>
+                    <mat-list-item [ngClass]="{'current':(item.id == course.id)}" *ngFor="let item of managing_list">
+                        <a routerLink="/profile/course/{{item.id}}/manage/review">
+                            <h5>{{item.name}}</h5>
+                            <h6>by {{item.author.displayName()}}</h6>
+                        </a>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card>
+        </div>
+    </div>
+</ng-container>
+

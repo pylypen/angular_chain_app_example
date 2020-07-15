@@ -1,0 +1,23 @@
+<h1 mat-dialog-title class="primary-color">Crop your image to upload </h1>
+<mat-dialog-content class="accent-color">
+    <image-cropper
+        [imageChangedEvent]="imageChangedEvent.image"
+        [maintainAspectRatio]="cropper_settings.maintainAspectRatio"
+        [aspectRatio]="cropper_settings.aspectRatio"
+        [roundCropper]="cropper_settings.roundCropper"
+        [cropperMinWidth]="cropper_settings.cropperMinWidth"
+        [cropperMinHeight]="cropper_settings.cropperMinHeight"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button color="warn" mat-raised-button mat-dialog-close>
+        Cancel
+    </button>
+    <button mat-raised-button (click)="close()" color="primary">
+        Send
+    </button>
+</mat-dialog-actions>

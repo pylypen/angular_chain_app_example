@@ -1,0 +1,55 @@
+<div class="multi-column one-four row-loose"
+     *ngIf="config.org_teams_never.length">
+    <div>
+        <h4>Unreviewed</h4>
+        <mat-card>
+            <ng-container *ngIf="config.org_teams_never.length">
+                <h4><strong>{{config.organisation.name}} (Organization)</strong></h4>
+                <mat-divider></mat-divider>
+                <mat-list class="course-review team-list">
+                    <mat-list-item *ngFor="let team of config.org_teams_never">
+                        {{team.name}}
+                        <button mat-button color="primary" (click)="requestReview(team.id)">Request Review ›</button>
+                    </mat-list-item>
+                </mat-list>
+            </ng-container>
+        </mat-card>
+    </div>
+</div>
+
+<div class="multi-column one-four row-loose"
+     *ngIf="config.org_teams_pending.length">
+    <div>
+        <h4>Review Pending</h4>
+        <mat-card>
+            <ng-container *ngIf="config.org_teams_pending.length">
+                <h4><strong>{{config.organisation.name}} (Organization)</strong></h4>
+                <mat-divider></mat-divider>
+                <mat-list class="course-review team-list">
+                    <mat-list-item *ngFor="let team of config.org_teams_pending">
+                        {{team.name}}
+                    </mat-list-item>
+                </mat-list>
+            </ng-container>
+        </mat-card>
+    </div>
+</div>
+
+<div class="multi-column one-four row-loose"
+     *ngIf="config.org_teams_rejected.length">
+    <div>
+        <h4>Review Rejected</h4>
+        <mat-card>
+            <ng-container *ngIf="config.org_teams_rejected.length">
+                <h4><strong>{{config.organisation.name}} (Organization)</strong></h4>
+                <mat-divider></mat-divider>
+                <mat-list class="course-review team-list">
+                    <mat-list-item *ngFor="let team of config.org_teams_rejected">
+                        {{team.name}} - {{team.marketplace[0].review_message}}
+                        <button mat-button color="primary" (click)="requestReview(team.id)">Request Re-Review ›</button>
+                    </mat-list-item>
+                </mat-list>
+            </ng-container>
+        </mat-card>
+    </div>
+</div>

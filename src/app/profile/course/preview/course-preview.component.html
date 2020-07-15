@@ -1,0 +1,77 @@
+<div class="primary-header no-padding" *ngIf="course.id">
+    <mat-card class="general-header">
+        <div class="cover-photo"
+             *ngIf="course.featured_background.id"
+             [ngStyle]="{
+                'background-image' : 'url(' + course.featured_background.src + ')'
+            }"
+        >
+        </div>
+        <div class="cover-photo"
+             *ngIf="!course.featured_background.id"
+             style="background-image: url('/assets/placeholders/courses-header.jpg')"
+        >
+        </div>
+        <mat-card-content class="general-header-content">
+            <h1> COURSE PREVIEW MODE </h1>
+            <h2>{{course.name}}</h2>
+            <h4>by {{course.author.displayName()}}</h4>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="primary-body" *ngIf="course.id">
+    <div class="create-edit-action-bar">
+        <div>
+            <a routerLink="/profile/courses" class="naked-link">
+                ← Back to Courses List
+            </a>
+            <span *ngIf="page_mode=='lesson' && course.lessons.length > 0">
+                Lesson: {{current_lesson.order}} of {{course.lessons.length}} : {{current_lesson.name}}
+            </span>
+            <span *ngIf="course.lessons.length == 0">
+                    No Lessons are available for this course.
+            </span>
+        </div>
+
+        <div class="action-buttons">
+        </div>
+    </div>
+
+    <ng-container *ngIf="page_mode=='lesson'">
+
+        <div *ngIf="course.lessons.length" class="multi-column four-one">
+            <div>
+                <div class="one-column">
+                    <div style="padding: 0;">
+                        <div class="multi-column halves lesson-navigation">
+                            <div *ngIf="current_lesson_index != 0" class="prev" (click)="prevLesson()">
+                                « Previous lesson
+                            </div>
+                            <div *ngIf="current_lesson_index < (course.lessons.length - 1)" class="next"
+                                 (click)="nextLesson()">
+                                Next lesson »
+                            </div>
+                        </div>
+                    </div>
+                    <lesson-content *ngIf="page_mode=='lesson'" [data]="current_lesson"></lesson-content>
+                </div>
+            </div>
+            <div>
+                <mat-card class="lesson-playlist">
+                    <h3>Lessons</h3>
+                    <mat-list dense>
+                        <mat-list-item [ngClass]="{'current':(item.id == current_lesson.id)}"
+                                       *ngFor="let item of course.lessons;let $index = index">
+                            <h4 matLine>
+                                <a [routerLink]="" (click)="jumpLesson($index)">
+                                    Lesson {{ item.order }} | {{ item.displayName() }}
+                                </a>
+                            </h4>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card>
+            </div>
+        </div>
+    </ng-container>
+</div>

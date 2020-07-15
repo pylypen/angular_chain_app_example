@@ -1,0 +1,35 @@
+<div class="login-form-container">
+    <mat-card>
+        <div class="login-form" (keyup.enter)="login()">
+            <mat-form-field color="accent" class="login" floatlabel="always">
+                <input matInput [(ngModel)]="model.email" type="text" placeholder="Email Address"/>
+            </mat-form-field>
+            <mat-error *ngIf="login_errors.email.display">{{login_errors.email.message}}</mat-error>
+            
+            <mat-form-field color="accent">
+                <input matInput [(ngModel)]="model.password" type="password" placeholder="Password"/>
+            </mat-form-field>
+            <mat-error *ngIf="login_errors.password.display">{{login_errors.password.message}}</mat-error>
+
+            <div class="login-form-options">
+                    <mat-slide-toggle color="primary">Remember</mat-slide-toggle>
+            </div>
+            <div class="actions">
+                <button mat-raised-button color="primary" class="login-button" (click)="login()">Log In</button>
+                <button mat-button color="accent" routerLink="/forgot-password" class="forgot-password-link">Forgot password?</button>
+                <button mat-button color="accent" routerLink="/sign-up" class="forgot-password-link">SignUp</button>
+
+
+            </div>      
+
+            <div class="social">
+                <a target="_blank" href="https://www.facebook.com/">
+                    <svg-icon src="/assets/icons/facebook-square.svg" alt=""></svg-icon>
+                </a>
+                <a target="_blank" href="https://www.instagram.com/">
+                    <svg-icon src="/assets/icons/instagram.svg" alt=""></svg-icon>
+                </a>
+                </div>
+        </div>
+    </mat-card>
+</div>

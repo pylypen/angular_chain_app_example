@@ -1,0 +1,51 @@
+@import "../../variables.scss";
+@import "../../mixins.scss";
+
+
+.course-entries-wrapper {
+	margin: -5px 0 0 -5px;
+	> div {
+		max-width: 270px;
+		margin: 5px;
+		@include mq('tablet', max) {
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+}
+.courses-container {
+	background: white;
+	border: $washed-gray solid 1px;
+	border-radius: 3px;
+	@include flex-horizontal;
+	flex-wrap: wrap;
+	padding: 1rem;
+	.mat-card {
+		border: none;
+		padding: 1.5rem 1.5rem;
+		box-shadow: none !important;
+		.mat-progress-bar, .course-actions, .mat-card-title h4 {
+			margin-left: 0.35rem;
+		}
+	    .mat-card-image, .mat-progress-bar {
+			border-radius: 0.35rem;
+		}
+		.mat-card-image {
+			margin: 0;
+		}
+		.mat-progress-bar, .mat-card-title {
+			margin-top: 0.75rem !important;
+			margin-bottom: 0.75rem !important;
+			width: 98%;
+		}
+	}
+}
+
+.courses-action-bar{
+	display: flex !important;
+	flex-direction: column !important;
+	width: 25%;
+	.mat-form-field{
+		margin-top: 1rem;
+	}
+}

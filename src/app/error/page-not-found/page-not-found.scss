@@ -1,0 +1,14 @@
+@import "../../variables.scss";
+@import "../../mixins.scss";
+
+
+.layout-404{
+  height: calc(100vh - 80px);
+  @include flex-vertical{
+    justify-content: center;
+    align-items: center;
+  }
+  .actions{
+    margin-top: 2rem;
+  }
+}

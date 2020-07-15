@@ -1,0 +1,18 @@
+<h1 mat-dialog-title class="primary-color">Send Certificate To Email</h1>
+<mat-dialog-content class="accent-color">
+    <mat-form-field color="accent">
+        <input matInput type="text" [(ngModel)]="request.email" placeholder="Email">
+        <div class="mat-error" *ngIf="errors.email.display">
+            {{errors.email.message}}
+        </div>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button color="warn" mat-raised-button mat-dialog-close>
+        Cancel
+    </button>
+    <button mat-raised-button color="primary" (click)="sendEmail()">
+        Send
+    </button>
+</mat-dialog-actions>

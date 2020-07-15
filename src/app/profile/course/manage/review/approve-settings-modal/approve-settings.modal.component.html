@@ -1,0 +1,32 @@
+<h3 mat-dialog-title class="primary-color">Review Options</h3>
+<mat-dialog-content class="accent-color approve-setings">
+
+    <mat-list>
+        <mat-list-item class="approve-settings-content" *ngFor="let item of config;let $index = index">
+          <h4 mat-line>{{item.team.name}}</h4>
+          <p mat-line>{{'Organisation ' + identity.organisation.name}}</p>
+            <mat-form-field color="accent">
+            <mat-select [(ngModel)]="request.marketplace[$index].marketplace_status_id"
+                            placeholder="Marketplace Status">
+                    <mat-option [disabled]="status.id == 1" [value]="status.id" *ngFor="let status of statuses_list">
+                        {{status.status}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field color="accent" *ngIf="request.marketplace[$index].marketplace_status_id == 3">
+                <input [(ngModel)]="request.marketplace[$index].review_message" matInput type="text"
+                       placeholder="Decline Reason">
+            </mat-form-field>
+        </mat-list-item>
+    </mat-list>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="warn" mat-dialog-close>
+        Cancel
+    </button>
+    <button (click)="saveApproveSettings()" mat-raised-button color="primary">
+        Submit Settings
+    </button>
+</mat-dialog-actions>

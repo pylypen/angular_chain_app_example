@@ -1,0 +1,75 @@
+
+.mat-dialog-title {
+  border-bottom: $light-gray solid 1px;
+  margin: -24px 0 0 -24px;
+  padding: 15px;
+}
+.mat-dialog-content {
+  .mat-form-field-type-mat-chip-list{
+    height: auto;
+  }
+  &.approve-setings{
+    .approve-settings-content{
+      height: auto !important;
+      .mat-list-item-content{
+        @include flex-vertical{
+        };
+        .mat-form-field{
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}
+.mat-dialog-actions {
+  margin: 0 0 !important;
+  @include flex-horizontal;
+  justify-content: space-around;
+  button {
+    flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    &.close-button {
+
+      cursor: pointer;
+
+    }
+  }
+}
+
+.people-details-modal{
+  .mat-dialog-container{
+    padding: 0;
+    .mat-dialog-content{
+      padding: 0;
+      margin: 0;
+      max-height: 100%;
+      .mat-toolbar{
+        .example-icon {
+          padding: 0 14px;
+        }
+        .example-spacer {
+          flex: 1 1 auto;
+        }
+      }
+      .profile-img{
+        display: block;
+        width: 10rem;
+        border-radius: 50%;
+        margin: 1rem auto 1rem auto;
+      }
+      .mat-list{
+        .mat-line{
+          color: $brand-secondary!important;
+        }
+        .mat-list-item{
+          button{
+            width: 50%;
+          }
+        }
+      }
+      .mat-tab-body{
+        min-height: 0;
+      }
+    }
+  }
+}

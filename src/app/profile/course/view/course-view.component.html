@@ -1,0 +1,25 @@
+<div class="primary-header no-padding">
+    <mat-card class="general-header">
+        <div class="cover-photo" 
+            *ngIf="course.featured_background.id"
+            [ngStyle]="{
+                'background-image' : 'url(' + course.featured_background.src + ')'
+            }"
+        >
+        </div>
+        <div class="cover-photo" 
+            *ngIf="!course.featured_background.id"
+            style="background-image: url('/assets/placeholders/courses-header.jpg')"
+        >
+        </div>
+        <mat-card-content class="general-header-content">
+            <h2>{{course.name}}</h2>
+            <h4>by {{course.author.displayName()}}</h4><br/>
+            <h5> {{course.completion}}% completed </h5>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="primary-body">
+    <router-outlet></router-outlet>
+</div>

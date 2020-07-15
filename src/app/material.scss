@@ -1,0 +1,208 @@
+@import "variables.scss";
+
+.mat-card { // Material Card
+  border-radius: 3px !important;
+  border: $washed-gray solid 1px;
+  .mat-card-actions {
+    padding: 18px 0 7px !important;
+  }
+
+}
+
+
+
+.angular-editor{
+
+	.angular-editor-toolbar {
+        .angular-editor-toolbar-set {
+            height: 31px !important;
+            border: none !important;
+                button {
+                    height: 31px;
+                }
+                button[title="undo"], button[title="redo"] {
+                display: inline-block;
+                }
+                #bold- {
+                    display: inline-block;
+                }
+                #italic- {
+                    display: inline-block;
+                }
+                #underline- {
+                    display: inline-block;
+                }
+                #strikeThrough- {
+                    display: inline-block;
+                }
+                #subscript- {
+                    display: inline-block;
+                }
+                #superscript- {
+                    display: inline-block;
+                }
+                #justifyLeft- {
+                    display: inline-block;
+                }
+                #justifyRight- {
+                    display: inline-block;
+                }
+                #justifyCenter- {
+                    display: inline-block;
+                }
+                #justifyFull- {
+                    display: inline-block;
+                }
+                #indent- {
+                    display: inline-block;
+                }
+                #outdent- {
+                    display: inline-block;
+                }
+                #insertUnorderedList- {
+                    display: inline-block;
+                }
+                #insertOrderedList- {
+                    display: inline-block;
+                }
+                .select-font {
+                    display: none !important;
+                }
+
+                .select-font-size {
+                    display: none !important;
+                }
+                #foregroundColorPicker- {
+                    display: none !important;
+                }
+                #backgroundColorPicker- {
+                    display: none !important;
+                }
+                #link- {
+                    display: inline-block;
+                }
+                #unlink- {
+                    display: inline-block;
+                }
+                #insertImage- {
+                    display: none !important;
+                }
+                #insertVideo- {
+                    display: none !important;
+                }
+                #insertHorizontalRule- {
+                    display: inline-block;
+                }
+                #clearFormatting- {
+                    display: none !important;
+                }
+                #toggleEditorMode- {
+                    display: none !important;
+                }
+        }
+	}
+
+	.angular-editor-wrapper{
+
+		h1,h2,h3,h4,h5,h6{
+			margin-bottom: 1rem !important;
+		}
+
+		span{
+			font-size: inherit !important;
+			line-height: inherit !important;
+			font-weight: inherit !important;
+		}
+
+	}
+
+    .angular-editor-textarea {
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+    }
+}
+
+
+
+
+
+.mat-button{
+	outline: none !important;
+}
+
+
+.mat-form-field { // Material Form Field
+  width: 100%;
+  margin: 0 0 15px 0;
+  height: 3rem;
+}
+
+// Material chip, not basic
+
+.mat-chip:not(.mat-basic-chip){
+  padding: 0.5rem 1rem !important;
+  margin: 8px 0px 0 0px !important;
+}
+
+// Material snackbar
+
+.mat-snack-bar-container{
+  background: $brand-secondary !important;
+  opacity: 0.8 !important;
+  min-width: 0 !important;
+  border-radius: 0.5rem !important;
+}
+
+
+// Material Menu
+
+.mat-menu-content {
+	padding: 0 0 !important;
+	min-width: 240px;
+	h6 {
+		padding: 10px;
+	}
+	a {
+		@include flex-horizontal{
+			align-items: center;
+		}
+		padding: 5px 10px;
+		line-height: 35px;
+		&:hover {
+			text-decoration: none;
+			color: inherit;
+		}
+	}
+	.message-entry {
+		height: 100px;
+		width: 100%;
+		padding: 0 0;
+		overflow: auto;
+			.message-content {
+				@include flex-horizontal;
+				div:first-child {
+					flex: 1 1 auto;
+					-ms-flex: 1 1 auto;
+				}
+				div:last-child {
+					flex: 3 3 auto;
+					-ms-flex: 3 3 auto;
+				}
+				.message-member-wrapper {
+					padding: 10px;
+				}
+				.message {
+					padding: 10px;
+				}
+			}
+	}
+}
+
+
+// Material stepper
+
+.mat-step-header {
+  pointer-events: none !important;
+}

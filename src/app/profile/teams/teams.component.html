@@ -1,0 +1,66 @@
+<div class="primary-body">
+
+        <mat-card class="filter-container">
+            <div class="filter-bar">
+                <mat-form-field class="quarter" color="primary">
+                    <input type="text" [(ngModel)]="userName" name="users" ngDefaultControl [formControl]="usersFormControl" matInput [matAutocomplete]="users">
+                    <mat-label>User Name</mat-label>
+                    <mat-autocomplete #users="matAutocomplete">
+                        <mat-option *ngFor="let user of filteredUsers | async" [value]="user.displayName()">
+                            {{user.displayName()}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div class="action-buttons">
+                    <button mat-raised-button (click)="resetFilters()" color="primary">
+                        <mat-icon>settings_backup_restore</mat-icon>
+                        Reset filters
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+        <div class="teams-wrapper multi-column quarters">
+            <div *ngIf="teams.allow_create">
+                <mat-card (click)="openTeamSettingsDialog(false)" class="team-card create" title="Create a new team">
+                    <div class="action-icon-container create">
+                        <div class="action-icon blue">
+                            <svg-icon src="/assets/icons/add.svg"></svg-icon>
+                        </div>
+                    </div>
+                    <mat-card-title><h5>Create a Team</h5></mat-card-title>
+                    <mat-card-subtitle>It only takes a few minutes!</mat-card-subtitle>
+                </mat-card>
+            </div>
+            <div *ngFor="let item of teams.teams | teamUsersFilterPipe : userName" matRipple>
+                <mat-card class="team-card">
+                    <img mat-card-avatar class="team-avatar" *ngIf="item.team.logo.id" src="{{item.team.logo.src}}"/>
+                    <img mat-card-avatar class="team-avatar" *ngIf="!item.team.logo.id" src="/assets/placeholders/placeholder-avatar.jpg"/>
+                    <mat-card-title><h4>{{item.team.name}}</h4></mat-card-title>
+                    <mat-card-subtitle>
+                        <span>
+                            {{item.member_count}} team members
+                            <span *ngIf="item.is_member">(including you)</span>
+                        </span>
+                    </mat-card-subtitle>
+                    <div class="team-members">
+                        <div *ngFor="let member of item.member_preview" class="member">
+                            <img *ngIf="member.avatar.id" [src]="member.avatar.src"/>
+                            <img *ngIf="!member.avatar.id" src="/assets/placeholders/placeholder-avatar.jpg"/>
+                        </div>
+                    </div>
+                    <div *ngIf="item.is_admin" class="action-icon-container">
+                        <a class="two" title="Add a team member" (click)="openTeamMembersDialog(item.team.id)">
+                            <div class="action-icon blue">
+                                <svg-icon src="/assets/icons/teams.svg"></svg-icon>
+                            </div>
+                        </a>
+                        <a class="two" title="Team settings" (click)="openTeamSettingsDialog(item.team.id)">
+                            <div class="action-icon">
+                                <svg-icon src="/assets/icons/settings.svg"></svg-icon>
+                            </div>
+                        </a>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>

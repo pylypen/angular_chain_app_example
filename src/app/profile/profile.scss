@@ -1,0 +1,77 @@
+@import "../variables.scss";
+@import "../mixins.scss";
+
+
+// Header Toolbar and Menu
+@import "./header/profile-header.scss";
+
+
+// Left Sidebar
+@import "./sidebar-left/profile-sidebar-left.scss";
+
+
+// Dashboard
+@import "./dashboard/dashboard.scss";
+
+
+// Settings
+@import "./settings/settings.scss";
+
+
+// Teams
+@import './teams/teams.scss';
+
+
+// Courses
+@import "./courses/courses.scss";
+
+
+// Course
+@import "./course/course.scss";
+
+
+// Lesson view
+@import "./course/view/lesson/course-view-lesson.scss";
+
+
+// Lesson list view
+@import "./course/edit/curriculum/lesson-list/lesson-list.scss";
+
+
+.drop-file-container {
+	text-align:center;
+	background: $washed-gray;
+	border: $light-gray dashed 2px;
+	border-radius: 5px;
+
+	label {
+		width: 100%;
+		padding: 30px 0;
+		cursor:pointer;
+	}
+
+	&:hover {
+		background: darken($washed-gray, 3%);
+	}
+
+}
+
+.logo-container {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	flex-direction: column !important;
+	
+	img{
+		border-radius: 50%;
+		width: 10rem;
+		height: 10rem;
+		cursor: pointer;
+		box-sizing: border-box;
+		border: 0.1rem solid $brand-primary;
+		
+		&:hover{
+			border: 0.25rem solid $brand-primary;
+		}
+	}
+}

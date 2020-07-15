@@ -1,0 +1,231 @@
+<div class="primary-body">
+
+    <mat-card class="filter-container">
+        <div class="filter-bar">
+            <mat-form-field class="quarter">
+                <mat-label>Select Filter type</mat-label>
+                <mat-select [(ngModel)]="userSearch">
+                    <mat-option value="courseName">
+                        Course name
+                    </mat-option>
+                    <mat-option value="teamAssignment">
+                        Team assignment
+                    </mat-option>
+                    <mat-option value="selfAssignment">
+                        Self assigned
+                    </mat-option>
+                    <mat-option value="selfAuthored">
+                        Self authored
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="quarter" color="primary" *ngIf="userSearch === 'courseName'">
+                <input [(ngModel)]="searchText" matInput>
+                <mat-label>
+                    Course Name
+                </mat-label>
+            </mat-form-field>
+            <mat-form-field class="quarter" color="primary" *ngIf="userSearch === 'teamAssignment'">
+                <mat-label>Select team to search</mat-label>
+                <mat-select [(ngModel)]="searchTeam" disableRipple>
+                    <mat-option *ngFor="let team of teams.teams" [value]="team.team.id">{{team.team.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div class="action-buttons">
+                <button mat-raised-button color="primary" routerLink="/profile/course/new">Create Course +</button>
+                <button mat-raised-button (click)="resetFilters()" color="primary">
+                    <mat-icon>settings_backup_restore</mat-icon>
+                    Reset filters
+                </button>
+            </div>
+        </div>
+    </mat-card>
+
+    <div class="one-column">
+        <div *ngIf="userSearch === 'teamAssignment'">
+            <h4>Teams assigned courses</h4>
+            <div class="courses-container">
+                <div class="course-entries-wrapper multi-column halves">
+                    <div class="course"
+                         *ngFor="let course of courses.team_assignment | coursesFilterByIDPipe : searchTeam">
+                        <mat-card class="course-entry">
+                            <img *ngIf="course.thumbnail.id" mat-card-image [src]="course.thumbnail.src"
+                                 routerLink="/profile/course/{{course.id}}/view">
+
+                            <img *ngIf="!course.thumbnail.id" mat-card-image
+                                 src="/assets/placeholders/placeholder-course.jpg"
+                                 routerLink="/profile/course/{{course.id}}/view">
+
+                            <mat-card-content>
+                                <mat-card-title>
+                                    <h4>
+                                        <strong>
+                                            {{course.name}}
+                                        </strong>
+                                    </h4>
+                                </mat-card-title>
+                                <ng-container *ngIf="course.completion > 0">
+                                    <mat-progress-bar color="primary" [value]="course.completion"></mat-progress-bar>
+                                    <mat-card-subtitle class="progress-completion">{{course.completion}}% completed
+                                    </mat-card-subtitle>
+                                    <div class="course-actions">
+                                        <button mat-raised-button color="primary"
+                                                routerLink="/profile/course/{{ course.id }}/view">
+                                            Continue
+                                        </button>
+                                        <button mat-button color="primary" *ngIf="course.completion == 100"
+                                                (click)="requestCertificate(course.id)" class="naked">
+                                            Certificate
+                                        </button>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="course.completion == 0">
+                                    <mat-progress-bar [value]="course.completion"></mat-progress-bar>
+                                    <mat-card-subtitle>Not Yet Started</mat-card-subtitle>
+                                    <div class="course-actions">
+                                        <button mat-raised-button color="primary"
+                                                routerLink="/profile/course/{{ course.id }}/view">
+                                            Start
+                                        </button>
+                                    </div>
+                                </ng-container>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="one-column">
+
+            <div class="one-column">
+                <div *ngIf="(courses.assigned.length || userSearch === 'selfAssignment') &&
+        (userSearch !== 'selfAuthored' && userSearch !== 'teamAssignment')">
+                    <h4>Your Assigned Courses</h4>
+                    <div class="courses-container">
+                        <div class="course-entries-wrapper multi-column halves">
+                            <div class="course"
+                                 *ngFor="let course of courses.assigned | coursesFilterPipe : searchText">
+                                <mat-card class="course-entry">
+                                    <img *ngIf="course.thumbnail.id" mat-card-image [src]="course.thumbnail.src"
+                                         routerLink="/profile/course/{{course.id}}/view">
+
+                                    <img *ngIf="!course.thumbnail.id" mat-card-image
+                                         src="/assets/placeholders/placeholder-course.jpg"
+                                         routerLink="/profile/course/{{course.id}}/view">
+
+                                    <mat-card-content>
+                                        <mat-card-title>
+                                            <h4>
+                                                <strong>
+                                                    {{course.name}}
+                                                </strong>
+                                            </h4>
+                                        </mat-card-title>
+                                        <ng-container *ngIf="course.completion > 0">
+                                            <mat-progress-bar color="primary"
+                                                              [value]="course.completion"></mat-progress-bar>
+                                            <mat-card-subtitle class="progress-completion">{{course.completion}}%
+                                                completed
+                                            </mat-card-subtitle>
+                                            <div class="course-actions">
+                                                <button mat-raised-button color="primary"
+                                                        routerLink="/profile/course/{{ course.id }}/view">
+                                                    Continue
+                                                </button>
+                                                <button mat-button color="primary" *ngIf="course.completion == 100"
+                                                        (click)="requestCertificate(course.id)" class="naked">
+                                                    Certificate
+                                                </button>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="course.completion === null || course.completion == 0">
+                                            <mat-progress-bar color="primary" [value]="0"></mat-progress-bar>
+                                            <mat-card-subtitle>Not Yet Started</mat-card-subtitle>
+                                            <div class="course-actions">
+                                                <button mat-raised-button color="primary"
+                                                        routerLink="/profile/course/{{ course.id }}/view">
+                                                    Start
+                                                </button>
+                                            </div>
+                                        </ng-container>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="(courses.authoring.length || userSearch === 'selfAuthored') &&
+            (userSearch !== 'selfAssignment' && userSearch !== 'teamAssignment')">
+                    <h4>Your Authored Courses</h4>
+                    <div class="courses-container">
+                        <div class="course-entries-wrapper multi-column halves">
+                            <div class="course"
+                                 *ngFor="let course of courses.authoring | coursesFilterPipe : searchText ">
+                                <mat-card>
+                                    <img *ngIf="course.thumbnail.id" mat-card-image [src]="course.thumbnail.src"
+                                         routerLink="/profile/course/{{course.id}}/edit/details">
+
+                                    <img *ngIf="!course.thumbnail.id" mat-card-image
+                                         src="/assets/placeholders/placeholder-course.jpg"
+                                         routerLink="/profile/course/{{course.id}}/edit/details">
+
+                                    <mat-card-content>
+                                        <mat-card-title>
+                                            <h4>
+                                                <strong>
+                                                    {{course.name}}
+                                                </strong>
+                                            </h4>
+                                        </mat-card-title>
+                                        <div class="course-actions">
+                                            <button mat-raised-button color="primary"
+                                                    routerLink="/profile/course/{{course.id}}/edit/details">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="(courses.managing.length && userSearch !== 'selfAuthored') &&
+            (userSearch !== 'selfAssignment' && userSearch !== 'teamAssignment')">
+                    <h4>Your Managed Courses</h4>
+                    <div class="courses-container">
+                        <div class="course-entries-wrapper multi-column halves">
+                            <div class="course"
+                                 *ngFor="let course of courses.managing | coursesFilterPipe : searchText ">
+                                <mat-card>
+                                    <img *ngIf="course.thumbnail.id" mat-card-image [src]="course.thumbnail.src"
+                                         routerLink="/profile/course/{{course.id}}/manage/assign">
+
+                                    <img *ngIf="!course.thumbnail.id" mat-card-image
+                                         src="/assets/placeholders/placeholder-course.jpg"
+                                         routerLink="/profile/course/{{course.id}}/manage/assign">
+
+                                    <mat-card-content>
+                                        <mat-card-title>
+                                            <h4>
+                                                <strong>
+                                                    {{course.name}}
+                                                </strong>
+                                            </h4>
+                                        </mat-card-title>
+                                        <div class="course-actions">
+                                            <button mat-raised-button color="primary"
+                                                    routerLink="/profile/course/{{course.id}}/manage/assign">
+                                                Manage
+                                            </button>
+                                        </div>
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

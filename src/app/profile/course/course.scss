@@ -1,0 +1,170 @@
+/* Courses */
+
+	/* Create/Edit */
+
+	mat-tab-body {
+		min-height: 630px;
+	}
+	.course-progress-indicator {
+		width: 25%;
+		margin: 50px auto 0;
+		color: white;
+		z-index:2;
+	}
+	.mat-table {
+		&.edit {
+			.mat-row {
+				cursor: grab;
+				&:hover {
+					background: lighten($washed-gray, 5%);
+					box-shadow: 0px 1px 8px -4px $middle-gray;
+				}
+				&:active {
+					cursor: grabbing;
+				}
+			}
+		}
+	}
+	.mat-column-name {
+		flex: 7 7 20% !important;
+		-ms-flex: 7 7 20% !important;
+	}
+	.create-edit-action-bar {
+		padding: 20px 0;
+		@include flex-horizontal;
+		div:nth-child(1) {
+			flex: 2 2 auto;
+			-ms-flex: 1 1 100px;
+			@include flex-vertical;
+		 * {
+			 margin: auto 0;
+		 }
+		}
+		div:nth-child(2) {
+			flex: 2 2 auto;
+			-ms-flex: 4 4 auto;
+			@include flex-horizontal;
+			justify-content: flex-end;
+			* {
+				margin: auto 0;
+			}
+		}
+		div:nth-child(3) {
+			flex: 1 1 100px;
+			-ms-flex: 1 1 100px;
+			@include flex-horizontal;
+			* {
+				margin: auto 0;
+			}
+		}
+
+		.naked-link {
+			color: $middle-gray;
+			margin: 0 0 0 10px;
+		}
+		.action-buttons {
+			@include mq('phablet', max) {
+				flex: 1 1 auto;
+				-ms-flex: 1 1 auto;
+				margin: auto 0;
+				button, a {
+					margin: 0 0.25rem 0;
+				}
+			}
+			@include mq('tablet', min) {
+				flex: 1 1 auto;
+				-ms-flex: 1 1 auto;
+				margin: auto;
+				button, a {
+					margin: 0 0.5rem 0 0;
+
+				}
+			}
+		}
+	}
+
+	.course-branding-uploader-label {
+	  background: $brand-primary;
+	  border-radius: 4px;
+	  min-width: 90px;
+	  text-align:center;
+	  padding: 8px 10px;
+	  margin: 0 5px 3px 5px;
+	  border: none;
+	  color:white;
+	  cursor: pointer;
+	  &:hover {
+	    background:darken($brand-primary, 7%)
+	  }
+	}
+	/* Course Review */
+	.course-review {
+		&.team-list {
+			margin: 0 0 20px 0;
+		}
+	}
+
+
+	// Course Edit
+	.responsive{
+		&.mat-card{
+			display: none;
+			position: relative;
+			// padding: 12px 10px 8px;
+			@include mq('tablet-wide', max){
+				display: flex !important;
+				justify-content: center;
+				align-items: center;
+				svg-icon{
+					position: absolute;
+					top: calc(50% - 1.5rem);
+					left: 5%;
+					width: 3rem;
+					height: 3rem;
+				}
+			}
+		}
+
+
+		display: none;
+		cursor: pointer;
+
+	}
+	.mat-tab-links { // Material Tabs
+		@include mq('tablet-wide', max){
+			height: 0rem;
+		  & > a {
+			width: 100%;
+			min-height: 5rem;
+		  }
+		  @include flex-vertical{
+			align-items: center;
+		  }
+		}
+
+		.mat-ink-bar {
+			background-color: $brand-secondary!important;
+			@include mq('tablet-wide', max){
+			background-color: transparent !important;
+		  }
+		}
+
+	  }
+
+	// Lesson Edit
+	.drop-file-container {
+		padding: 0 2rem;
+	}
+
+	.lesson-playlist,
+	.assessment-playlist{
+		margin: 0 0 1rem 0;
+		mat-list {
+			mat-list-item {
+				&.current {
+					border-left: $brand-primary solid 2px;
+					font-weight: bold;
+				}
+			}
+		}
+	}

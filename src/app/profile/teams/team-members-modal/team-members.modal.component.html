@@ -1,0 +1,46 @@
+<h1 mat-dialog-title class="primary-color">{{config.team.name}} Team</h1>
+<mat-dialog-content class="accent-color">
+
+    <mat-form-field color="accent">
+        <mat-chip-list #chipList>
+            <mat-chip
+                    *ngFor="let member of memberEmails"
+                    (removed)="remove(member)">
+                {{member}}
+                <mat-icon matChipRemove>x</mat-icon>
+            </mat-chip>
+            <input
+                    placeholder="Team Members"
+                    #emailInput
+                    [formControl]="memberCtrl"
+                    [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="false"
+                    (matChipInputTokenEnd)="add($event)"
+            />
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let user of filteredUsers" [value]="user.email">
+
+                <ng-container *ngIf="user.displayName() != user.email">
+                    {{ user.displayName() }}&nbsp;-&nbsp;{{user.email}}
+                </ng-container>
+
+                <ng-container *ngIf="user.displayName() == user.email">
+                    {{ user.displayName() }}
+                </ng-container>
+
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="warn" mat-dialog-close>
+        Cancel
+    </button>
+    <button mat-raised-button color="primary" (click)="saveTeam()">
+        Update Team Members
+    </button>
+</mat-dialog-actions>

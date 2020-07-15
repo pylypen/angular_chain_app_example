@@ -1,0 +1,42 @@
+@import "../../mixins.scss";
+
+.courses-wrapper {
+    .quick-start {
+      margin-bottom: 2.5rem !important;
+      @include flex-horizontal {
+        align-items: center;
+      }
+      @include mq('tablet', max) {
+        @include flex-horizontal {
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+      button {
+        @include mq('tablet', max) {
+          margin: 1rem;
+          width: 100%;
+        }
+        margin-right: 0.75rem !important;
+        svg-icon {
+          svg path {
+            fill: #ffffff;
+          }
+          svg{
+            position: relative;
+            width: 1rem;
+            margin-right: 0.5rem;
+          }
+          
+        }
+      }
+    }
+  > div {
+    @include mq('phone', max) {
+      margin-bottom: 2rem;
+      padding: 0 0;
+      width: 100%;
+    }
+  }
+}

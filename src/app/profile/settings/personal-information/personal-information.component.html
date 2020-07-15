@@ -1,0 +1,62 @@
+<mat-card class="settings-personal-information">
+    <mat-card-title>Personal Information</mat-card-title>
+    <mat-divider></mat-divider>
+    <div class="multi-column halves">
+        <div class="settings-form-field-wrapper">
+            <!-- Primary email just for reference here -->
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Primary Email" disabled value="{{identity.user.email}}">
+            </mat-form-field>
+
+            <mat-form-field color="accent">
+                <input matInput type="email" placeholder="Contact Email" [(ngModel)]="personal_info.contact_email">
+                <mat-error *ngIf="errors.contact_email.display">{{errors.contact_email.message}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="First name" [(ngModel)]="personal_info.first_name">
+            </mat-form-field>
+            <mat-error *ngIf="errors.first_name.display">{{errors.first_name.message}}</mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="text" placeholder="Last name" [(ngModel)]="personal_info.last_name">
+            </mat-form-field>
+            <mat-error *ngIf="errors.last_name.display">{{errors.last_name.message}}</mat-error>
+
+            <mat-form-field color="accent">
+                <input matInput type="tel" placeholder="Phone number" [(ngModel)]="personal_info.phone_number">
+            </mat-form-field>
+            <mat-error *ngIf="errors.phone_number.display">{{errors.phone_number.message}}</mat-error>
+
+            <mat-form-field>
+                <input matInput [matDatepicker]="datepicker" [(ngModel)]="personal_info.birthday"
+                       placeholder="Birthday" disabled>
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <mat-error *ngIf="errors.birthday.display">{{errors.birthday.message}}</mat-error>
+
+        </div>
+        <div>
+            <mat-card class="edit-profile-avatar-container">
+
+                <label for="uploader-input">
+                    <img mat-card-avatar class="edit-profile-avatar large" *ngIf="identity.user.avatar.src"
+                         [src]="personal_info.avatar.src"/>
+                    <img mat-card-avatar class="edit-profile-avatar large" *ngIf="!identity.user.avatar.src"
+                         src="/assets/placeholders/placeholder-avatar.jpg"/>
+                    <mat-card-title><h5>Change your profile photo</h5></mat-card-title>
+                </label>
+                <input type="file" name="avatar" (change)="fileChangeEvent($event, 'avatar')" id="uploader-input" style="display:none"/>
+                <mat-card-subtitle>Click on the image to select a new photo from your computer.<br/>
+                    <em>Minimum 150px by 150px. Recommended size is 300px x 300px</em>.
+                </mat-card-subtitle>
+
+            </mat-card>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="updatePersonalInfo()">Save Changes</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,148 @@
+<div class="multi-column four-one">
+    <div>
+        <div class="one-column">
+            <div style="padding: 0;">
+                <div class="lesson-navigation">
+
+                    <div *ngIf="prev_lesson_id" class="prev"
+                         routerLink="/profile/course/{{course.id}}/view/lesson/{{prev_lesson_id}}">
+                        « Previous lesson
+                    </div>
+                    <div *ngIf="!prev_lesson_id" class="prev disabled">« No Previous lesson</div>
+
+
+                    <div *ngIf="next_lesson_id" class="next"
+                         routerLink="/profile/course/{{course.id}}/view/lesson/{{next_lesson_id}}">
+                        Next lesson »
+                    </div>
+                    <div *ngIf="!next_lesson_id" class="next disabled">
+                        No next lesson »</div>
+
+                </div>
+            </div>
+
+            <lesson-content *ngIf="lesson.id" [data]="lesson"></lesson-content>
+
+
+            <div>
+                <button mat-raised-button color="primary"
+                        (click)="completeLesson()">
+                    Complete Lesson
+                </button>
+            </div>
+
+            <div *ngIf="lesson.allow_comments">
+                <div class="comments-module-wrapper">
+                    <div class="comments-header-row">
+                        <div>Member</div>
+                        <div>Comment</div>
+                    </div>
+                    <div class="comments-list">
+                        <!-- Create comment -->
+                        <div class="comments-entry">
+                            <div class="comment-content">
+                                <div class="comment-member-wrapper">
+                                    <mat-card>
+                                        <img mat-card-avatar *ngIf="identity.user.avatar.id"
+                                             [src]="identity.user.avatar.src"/>
+                                        <img mat-card-avatar *ngIf="!identity.user.avatar.id"
+                                             src="/assets/placeholders/placeholder-avatar.jpg"/>
+                                        <mat-card-title>
+                                            <h4>{{identity.user.displayName()}}</h4>
+                                        </mat-card-title>
+                                        <!--<mat-card-subtitle>Boone, NC</mat-card-subtitle> -->
+                                    </mat-card>
+                                </div>
+                                <div class="comment-message">
+                                    <mat-form-field color="accent" floatLabel="never">
+                                        <textarea [(ngModel)]="new_comment.comment" matInput
+                                                  [mention]="mentionItems"
+                                                  [mentionConfig]="mentionConfig"
+                                                  placeholder="Write your comment here"></textarea>
+                                    </mat-form-field>
+                                    <button mat-raised-button color="primary" (click)="postComment()">Post Comment</button>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="lessonComments.length">
+                            <!-- List of existing comments -->
+                            <div class="comments-entry" *ngFor="let comment of lessonComments">
+                                <div class="comment-toolbar">
+                                    <div class="comment-timestamp">
+                                        {{comment.created_at.toLocaleString()}}
+                                    </div>
+                                    <div class="comment-actions" *ngIf="(comment.user.id == identity.user.id )">
+
+                                        <button mat-button color="primary" (click)="comment.editing = true"
+                                           *ngIf="!comment.editing">Edit</button>
+                                        <button mat-button color="primary" class="mat-button naked warn" (click)="deleteComment(comment.id)"
+                                           *ngIf="!comment.editing">Delete</button>
+
+                                        <button mat-button color="primary" class="mat-button naked" (click)="comment.editing = false;"
+                                           *ngIf="comment.editing">Cancel</button>
+                                        <button mat-button color="primary" class="mat-button naked create-edit"
+                                           (click)="updateComment(comment)"
+                                           *ngIf="comment.editing">Update</button>
+
+                                    </div>
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-member-wrapper">
+                                        <mat-card>
+                                            <img mat-card-avatar *ngIf="comment.user.avatar.id"
+                                                 [src]="comment.user.avatar.src"/>
+                                            <img mat-card-avatar *ngIf="!comment.user.avatar.id"
+                                                 src="/assets/placeholders/placeholder-avatar.jpg"/>
+                                            <mat-card-title>
+                                                <h4>{{ comment.user.displayName() }}</h4>
+                                            </mat-card-title>
+                                            <!--<mat-card-subtitle>Boone, NC</mat-card-subtitle> -->
+                                        </mat-card>
+                                    </div>
+                                    <ng-container *ngIf="!comment.editing">
+                                        <div class="comment-message read">
+                                            <span class="message" [innerHtml]="comment.styled_comment"></span>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="comment.editing">
+                                        <div class="comment-message">
+                                            <mat-form-field color="accent" floatLabel="never">
+                                                <textarea [(ngModel)]="comment.comment" matInput
+                                                          [mention]="mentionItems"
+                                                          [mentionConfig]="mentionConfig"
+                                                          placeholder="Write your comment here"></textarea>
+                                            </mat-form-field>
+
+                                        </div>
+
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <mat-card class="lesson-playlist">
+            <h3>Lessons</h3>
+            <mat-list dense>
+                <mat-list-item [ngClass]="{'current':(item.id == lesson.id)}" *ngFor="let item of course.lessons">
+                    <h4 matLine>
+                        <a routerLink="/profile/course/{{course.id}}/view/lesson/{{item.id}}">
+                            Lesson {{ item.order }} | {{ item.displayName() }}
+                        </a>
+                    </h4>
+                    <p matLine>
+                        {{item.progress.progress_status.percent}}% Completed
+                    </p>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
+
+    </div>
+</div>

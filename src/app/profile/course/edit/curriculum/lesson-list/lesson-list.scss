@@ -1,0 +1,65 @@
+/* Lesson list */
+
+.lesson-list-container {
+    padding: 0 0 !important;
+
+    .create-edit-action-bar {
+        padding: 15px;
+        justify-content: right;
+
+        button {
+            flex: 0 1 auto;
+            -ms-flex: 0 1 auto;
+        }
+    }
+
+    .row {
+        padding: 5px 0;
+        border-bottom: $light-gray solid 1px;
+        @include flex-horizontal;
+        background: $washed-gray;
+        width: 100%;
+        margin: 0 0;
+
+        .drag-container {
+            flex: 0 1 40px;
+            ms-flex: 0 1 40px;
+            @include flex-horizontal {
+                justify-content: center;
+                align-items: center;
+            }
+        ;
+
+            .drag-handle {
+                cursor: grab;
+                @include no-user-select;
+            }
+
+        }
+
+        .lesson-name {
+            flex: 1 1 auto;
+            ms-flex: 1 1 auto;
+            @include flex-horizontal;
+            @include no-user-select;
+
+            h5 {
+                padding: 0 0;
+                margin: auto;
+                flex: 1 1 auto;
+                ms-flex: 1 1 auto;
+            }
+        }
+
+        .lesson-edit-button {
+            flex: 0 1 35px;
+            ms-flex: 0 1 35px;
+            @include flex-horizontal;
+
+            .mat-icon {
+                cursor: pointer;
+                @include no-user-select;
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/course/{{course.id}}/edit/curriculum" class="naked-link">← Back to Course Curriculum</a>
+    </div>
+    <div></div>
+    <div></div>
+</div>
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Create Lesson</h4>
+        <p>Start by giving your new lesson a name.</p>
+
+    </div>
+    <div>
+        <mat-card>
+            <div class="settings-form-field-wrapper">
+                <mat-form-field color="accent">
+                    <input matInput [(ngModel)]="lesson_name" type="text" placeholder="Lesson name">
+                </mat-form-field>
+                <mat-error *ngIf="errors.name.display || errors.lesson.display">{{errors.name.message || errors.lesson.message}}</mat-error>
+
+                <button mat-raised-button (click)="createLesson()" color="primary">Continue</button>
+            </div>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/courses" class="naked-link">← Back to Courses List</a>
+    </div>
+    <div class="action-buttons">
+    </div>
+</div>
+<div class="multi-column one-four">
+    <div>
+        <h4>Course Progress</h4>
+        <p>Review your content learning progress by teams or individuals.</p>
+    </div>
+    <div class="one-column row-tight">
+        <mat-card class="non-grid">
+            <mat-table #table [dataSource]="dataSource">
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="username">
+                        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{element.first_name + " " + element.last_name}}
+                        </mat-cell>
+                    </ng-container>
+    
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
+                    </ng-container>
+    
+    
+                    <!-- Progress Column -->
+                    <ng-container matColumnDef="progress">
+                        <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
+                        <mat-cell [matTooltip]="element.course_progress + '%'" *matCellDef="let element" >
+                            <mat-progress-bar mode="determinate" style="width: 75%" [value]="element.course_progress"></mat-progress-bar>
+                            <!-- {{element.course_progress}} % -->
+                        </mat-cell>
+                    </ng-container>
+    
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+        </mat-card>
+    </div>
+</div>

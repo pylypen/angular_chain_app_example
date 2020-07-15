@@ -1,0 +1,108 @@
+<section class="dashboard">
+    <div class="primary-header">
+        <mat-card class="profile-header">
+            <div class="cover-photo" 
+            *ngIf="identity.organisation.cover_picture.id"
+            [ngStyle]="{
+                'background-image' : 'url(' + identity.organisation.cover_picture.src + ')'
+            }">
+
+            </div>
+            <div class="cover-photo"
+            *ngIf="!identity.organisation.cover_picture.id"
+            style="background-image: url('/assets/placeholders/placeholder-org-cover.jpg')">
+            </div>
+            <mat-card-content class="profile-content">
+                <img mat-card-avatar class="profile-avatar large" *ngIf="identity.user.avatar.id"
+                    [src]="identity.user.avatar.src"/>
+                <img mat-card-avatar class="profile-avatar large" *ngIf="!identity.user.avatar.id"
+                    src="/assets/placeholders/placeholder-avatar.jpg"/>
+                <h3>{{identity.user.displayName()}}</h3>
+                <div class="profile-assigned-teams">
+                    <span *ngFor="let team of teams.visibleTeams()">{{ team.team.name }}</span>
+                    <span [title]="teams.teamsWithoutVisible()" *ngIf="teams.teamsCountWithoutVisible()">
+                        {{teams.teamsCountWithoutVisible()}} more...
+                    </span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="primary-body">
+        <div class="courses-wrapper multi-column four-one">
+            <div>
+                <mat-card
+                    class="quick-start mat-card"
+                    *ngIf="config.organisation.is_admin || config.organisation.is_owner"
+                    >
+                    <button mat-raised-button color="primary" routerLink="/profile/course/new" tabindex="0" ng-reflect-router-link="/profile/course/new">
+                        <svg-icon fill="#ffffff" src="/assets/icons/courses.svg"></svg-icon>
+                        Create Course
+                    </button>
+                    <button mat-raised-button color="primary" (click)="openInviteUserModal()" tabindex="0">
+                        <svg-icon src="/assets/icons/people.svg"></svg-icon>
+                        Invite Users
+                    </button>
+                    <button mat-raised-button color="primary" (click)="openCreateTeamModal()" tabindex="0">
+                        <svg-icon src="/assets/icons/teams.svg"></svg-icon>
+                        Create Team
+                    </button>
+                </mat-card>
+                <h4>Your Courses</h4>
+                <div class="courses-container">
+                    <div class="multi-column halves" *ngIf="courses.assigned">
+                        <div class="course" *ngFor="let course of courses.assigned">
+                            <mat-card class="course-entry">
+                                <img *ngIf="course.thumbnail.id" mat-card-image [src]="course.thumbnail.src"
+                                    routerLink="/profile/course/{{course.id}}/view" />
+                                <img *ngIf="!course.thumbnail.id" mat-card-image
+                                    src="/assets/placeholders/placeholder-course.jpg"
+                                    routerLink="/profile/course/{{course.id}}/view" />
+                                <mat-card-content>
+                                    <mat-card-title>
+                                        <h4>
+                                            <strong>
+                                                {{course.name}}
+                                            </strong>
+                                        </h4>
+                                    </mat-card-title>
+                                    <ng-container *ngIf="course.completion > 0">
+                                        <mat-progress-bar color="primary" [value]="course.completion"></mat-progress-bar>
+                                        <mat-card-subtitle class="progress-completion">{{course.completion}}% completed</mat-card-subtitle>
+                                        <div class="course-actions">
+                                            <button mat-raised-button color="primary"  routerLink="/profile/course/{{ course.id }}/view">
+                                                Continue
+                                            </button>
+                                            <button mat-button color="primary"  *ngIf="course.completion == 100"
+                                                    (click)="requestCertificate(course.id)" class="naked">
+                                                Certificate
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="course.completion === null || course.completion == 0">
+                                        <mat-progress-bar color="primary" [value]="0"></mat-progress-bar>
+                                        <mat-card-subtitle>Not Yet Started</mat-card-subtitle>
+                                        <div class="course-actions">
+                                            <button mat-raised-button color="primary"  routerLink="/profile/course/{{ course.id }}/view">
+                                                Start
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div *ngIf="courses.assigned.length <= 0">
+                        <h4>You have no courses currently assigned</h4>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div class="team-feed" *ngIf="teamFeed">
+                <h4>Team Feed</h4>
+                <mat-card class="team-activity-feed">
+                    <em>Team feed coming soon!</em>
+                </mat-card>
+            </div> -->
+        </div>
+    </div>
+</section>

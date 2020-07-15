@@ -1,0 +1,233 @@
+<div class="primary-header">
+    <mat-card class="profile-header">
+        <div class="cover-photo" 
+            *ngIf="identity.organisation.cover_picture.id"
+            [ngStyle]="{
+                'background-image' : 'url(' + identity.organisation.cover_picture.src + ')'
+            }">
+        </div>
+        <div class="cover-photo"
+            *ngIf="!identity.organisation.cover_picture.id"
+            style="background-image: url('/assets/placeholders/placeholder-org-cover.jpg')">
+        </div>
+        <mat-card-content class="profile-content">
+            <img mat-card-avatar class="profile-avatar large" *ngIf="identity.user.avatar.id"
+                 [src]="identity.user.avatar.src"/>
+            <img mat-card-avatar class="profile-avatar large" *ngIf="!identity.user.avatar.id"
+                 src="/assets/placeholders/placeholder-avatar.jpg"/>
+
+            <h3>{{identity.user.displayName()}}</h3>
+            <div class="profile-assigned-teams">
+                <span *ngFor="let team of teams.visibleTeams()">{{ team.team.name }}</span>
+                <span [title]="teams.teamsWithoutVisible()" *ngIf="teams.teamsCountWithoutVisible()">
+                    {{teams.teamsCountWithoutVisible()}} more...
+                </span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="primary-body">
+    <div class="create-edit-action-bar">
+        <div>
+            <h4>People of {{identity.organisation.name}}</h4>
+            <small class="mobile-disclaimer"><em>LearnHub for mobile may not display all information or features available to larger screens.</em></small>
+        </div>
+
+    </div>
+
+    <mat-card class="filter-container">
+        <div class="filter-bar">
+                <mat-form-field class="quarter">
+                    <mat-label>Select Filter type</mat-label>
+                    <mat-select [(ngModel)]="userSearch">
+                        <mat-option value="username">
+                            User Name or Email
+                        </mat-option>
+                        <mat-option value="teams">
+                            Team
+                        </mat-option>
+                        <mat-option value="status">
+                            Status
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="quarter" *ngIf="userSearch === 'username'" color="primary">
+                    <input matInput (keyup)="peopleSearchFilter($event.target.value)">
+                    <mat-label>User Name or Email</mat-label>
+                </mat-form-field>
+
+                <mat-form-field class="quarter" *ngIf="userSearch === 'teams'">
+                    <mat-select (selectionChange)="peopleSearchByTeam($event.value)">
+                        <mat-option *ngFor="let team of teams.teams" [value]="team.team.name" >
+                            {{team.team.name}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                        <mat-icon>close</mat-icon>
+                    </button> -->
+                    <mat-label>Team Name</mat-label>
+                </mat-form-field>
+
+                <mat-form-field class="quarter" *ngIf="userSearch === 'status'">
+                    <mat-select (selectionChange)="peopleSearchByStatus($event.value)">
+                        <mat-option value="1">
+                            Active
+                        </mat-option>
+                        <mat-option value="">
+                            All
+                        </mat-option>
+                    </mat-select>
+                    <mat-label>Status</mat-label>
+                </mat-form-field>
+
+                <div class="action-buttons">
+                    <button mat-raised-button color="primary" (click)="openCreateDialog()">Invite User</button>
+                    <button mat-raised-button (click)="resetFilters()" color="primary">
+                        <mat-icon>settings_backup_restore</mat-icon>
+                        Reset filters
+                    </button>
+                </div>
+        </div>
+    </mat-card>
+    
+    <div class="one-column">
+        
+        <mat-card>
+            <div *ngIf="people.length">
+                <mat-table #table [dataSource]="people_ds" matSort class="people">
+                    <!-- Avatar Column -->
+                    <ng-container matColumnDef="avatar">
+                        <mat-header-cell *matHeaderCellDef>Avatar</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <div class="user-avatar">
+                                <img *ngIf="element.avatar.id" [src]="element.avatar.src"/>
+                                <img *ngIf="!element.avatar.id" src="/assets/placeholders/placeholder-avatar.jpg"/>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="disp_name">
+                        <mat-header-cell mat-sort-header *matHeaderCellDef>Name</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <ng-container *ngIf="!config.organisation.is_admin && !config.organisation.is_owner">
+                                {{element.displayName()}} {{(element.id == identity.user.id)?'(you)':''}}
+                            </ng-container>
+                            <ng-container *ngIf="config.organisation.is_admin || config.organisation.is_owner">
+                                <button color="primary"
+                                 [matTooltip]="'Click to get detail info about ' + element.displayName()" 
+                                 mat-button
+                                 (click)="openDetailsDialog(element)">
+                                    {{element.displayName()}} {{(element.id == identity.user.id)?'(you)':''}}
+                                </button>
+                            </ng-container>
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell mat-sort-header *matHeaderCellDef>Email</mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.email}}</mat-cell>
+                    </ng-container>
+
+                    <!-- Teams Column -->
+                    <ng-container matColumnDef="teams">
+                        <mat-header-cell mat-sort-header *matHeaderCellDef>Teams</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+
+                            <ng-container *ngIf="element.user_teams.length">
+                                <span class="block" *ngFor="let ut of element.user_teams">{{ut.team.name}}&nbsp;</span>
+                            </ng-container>
+
+                            <ng-container *ngIf="!element.user_teams.length">
+                                <span>N/A</span>
+                            </ng-container>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+
+                            <ng-container *ngIf="!element.confirm_code">
+                                <span>Active</span>
+                            </ng-container>
+
+                            <ng-container *ngIf="element.confirm_code">
+                                <span>Waiting for Activation</span>
+                            </ng-container>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Last Login Column -->
+                    <ng-container matColumnDef="last_login">
+                        <mat-header-cell *matHeaderCellDef>Last Login</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+
+                            <ng-container *ngIf="element.login_at">
+                                <span>{{element.login_at | date:'M/d/y'}}</span>
+                            </ng-container>
+
+                            <ng-container *ngIf="!element.login_at">
+                                <span>N/A</span>
+                            </ng-container>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- Org Admin Column -->
+                    <ng-container matColumnDef="org_admin">
+                        <mat-header-cell *matHeaderCellDef>Org Admin</mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+
+                            <mat-slide-toggle
+                                    color="primary"
+                                    [checked]="(element.user_organisation.is_admin == 1)||(element.id == identity.user.id)"
+                                    [disabled]="(element.user_organisation.is_owner == 1)||(element.id == identity.user.id)"
+                                    (change)="toggleAdmin(element.id, $event.checked)"
+                            ></mat-slide-toggle>
+
+                        </mat-cell>
+
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+
+                            <ng-container
+                                    *ngIf="(element.user_organisation.is_owner != 1)&&(element.id != identity.user.id)">
+                                <button mat-raised-button color="primary" [matMenuTriggerFor]="menu">Action</button>
+                                <mat-menu #menu>
+                                    <button *ngIf="element.confirm_code" (click)="reinvite(element.id)" mat-menu-item>Re-send</button>
+                                    <button (click)="openEditDialog(element)" mat-menu-item>Edit</button>
+                                    <button (click)="openDeleteDialog(element)" mat-menu-item>Delete</button>
+                                </mat-menu>
+                            </ng-container>
+
+                            <!-- because of security reasons, to prevent disabled attribute removal -->
+                            <ng-container
+                                    *ngIf="(element.user_organisation.is_owner == 1)||(element.id == identity.user.id)">
+                                <button mat-button disabled>N/A</button>
+                            </ng-container>
+
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+            </div>
+        </mat-card>
+        <div *ngIf="!people.length">
+            <h4>You have no managing people at the moment</h4>
+        </div>
+    </div>
+
+</div>

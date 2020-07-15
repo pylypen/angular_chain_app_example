@@ -1,0 +1,93 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/courses" class="naked-link">← Back to Courses List</a>
+    </div>
+    <div class="action-buttons">
+    </div>
+</div>
+<div class="multi-column one-four">
+    <div>
+        <h4>Course Assignments</h4>
+        <p>Assign your content to teams or individuals.</p>
+
+    </div>
+    <div class="one-column row-tight">
+        <div *ngFor="let marketplace of config" class="non-grid">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <strong>{{marketplace.team.name}}</strong><br/>
+                        <h6>
+                            <ng-container>
+                                {{identity.organisation.name}}
+                            </ng-container>
+                        </h6>
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        {{marketplace.reviewed_by.displayName()}} approved this course assignment
+                    </mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-divider [inset]="true"></mat-divider>
+                <br/>
+                <mat-card-content>
+                    <p>To cherry-pick individuals from this team, select from the list below. Otherwise click
+                        <strong>Assign {{marketplace.team.name}}</strong>.</p>
+                    <mat-accordion>
+                        <mat-expansion-panel *ngIf="marketplace.is_wildcard_assigned == 0">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{marketplace.team.name}} Users
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    {{marketplace.users_course.length ? marketplace.users_course.length : 'None'}} of
+                                    {{marketplace.team.users.length}} users assigned
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <mat-selection-list #assignList>
+                                <mat-list-option *ngFor="let user of marketplace.team.users"
+                                                 [value]="user.id"
+                                                 color="primary"
+                                                 [selected]="shouldSelectAssigned(marketplace.users_course,user)">
+                                    {{user.displayName()}}
+                                </mat-list-option>
+                            </mat-selection-list>
+
+                            <mat-action-row>
+                                <button mat-raised-button color="primary" (click)="personalAssign(assignList,marketplace)">Assign</button>
+                            </mat-action-row>
+                        </mat-expansion-panel>
+
+                        <mat-expansion-panel disabled *ngIf="marketplace.is_wildcard_assigned != 0">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    To choose individuals only, cancel the team assignment.
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                        </mat-expansion-panel>
+
+
+                    </mat-accordion>
+                    <br/>
+                    <mat-checkbox [disabled]="marketplace.is_wildcard_assigned != 0"
+                                  [(ngModel)]="marketplace.is_wildcard_obligatory"
+                                  color="primary">
+                        Make assignment <em>required</em>
+                    </mat-checkbox>
+                </mat-card-content>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" *ngIf="marketplace.is_wildcard_assigned == 0" (click)="wildcardAssign(marketplace, true)">
+                        Assign {{marketplace.team.name}}
+                    </button>
+
+                    <button mat-raised-button color="primary" *ngIf="marketplace.is_wildcard_assigned != 0"
+                            (click)="wildcardAssign(marketplace, false)">
+                        Cancel team assignment
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

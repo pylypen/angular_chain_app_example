@@ -1,0 +1,36 @@
+/* Grayscale */
+$black: #000000;
+$dark-gray: #7f8c8d;
+$middle-gray: #95a5a6;
+$light-gray: #cccccc;
+$washed-gray: #f2f2f2;
+$white: #ecf0f1;
+
+// Colors
+$brand-primary: #f1c40f;
+$brand-secondary: #2c3e50;
+$brand-tertiary: #dfe8ee;
+$warn: #da1507;
+
+// Typography
+$type-dark-gray: #525363;
+$type-middle-gray: #979aa9;
+
+// Icons
+$icon-default: #9498A7;
+
+// Fonts
+$primary-font: 'Nunito', sans-serif;
+
+
+//media query sizes
+$breakpoints: (
+        "phone": 400px,
+        "phone-wide": 500px,
+        "phablet": 560px,
+        "tablet-small": 640px,
+        "tablet": 770px,
+        "tablet-wide": 1100px,
+        "desktop": 1370px,
+        "desktop-wide": 1440px,
+);

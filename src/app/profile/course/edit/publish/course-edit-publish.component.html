@@ -1,0 +1,58 @@
+<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/courses" class="naked-link">← Back to Courses List</a>
+    </div>
+    <div class="action-buttons">
+    </div>
+</div>
+<div class="multi-column one-four">
+    <div>
+        <mat-card class="subnav">
+          <h5 matSubheader>Menu</h5>
+            <mat-nav-list>
+                <a mat-list-item routerLink="/profile/course/{{course.id}}/edit/publish/request-review">
+                    Request Review
+                </a>
+                <a mat-list-item routerLink="/profile/course/{{course.id}}/edit/publish/publish-settings">
+                    Publish settings
+                </a>
+            </mat-nav-list>
+        </mat-card>
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+<!--<div class="create-edit-action-bar">
+    <div>
+        <a routerLink="/profile/courses" class="naked-link">← Back to Courses List</a>
+    </div>
+    <div></div>
+    <div class="action-buttons">
+    </div>
+</div>
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Publish</h4>
+        <p>Publish or unpublish your course.</p>
+    </div>
+    <div>
+        <mat-card>
+            <mat-slide-toggle>Publish this course</mat-slide-toggle>
+        </mat-card>
+    </div>
+</div>
+
+
+<div class="multi-column one-four row-loose">
+    <div>
+        <h4>Save</h4>
+    </div>
+    <div>
+        <mat-card>
+            <button>Save</button>
+
+        </mat-card>
+    </div>
+</div>-->

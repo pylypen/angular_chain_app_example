@@ -1,0 +1,44 @@
+<div class="primary-header no-padding">
+    <mat-card class="general-header">
+        <div class="cover-photo" 
+            *ngIf="course.featured_background.id"
+            [ngStyle]="{
+                'background-image' : 'url(' + course.featured_background.src + ')'
+            }"
+        >
+        </div>
+        <div class="cover-photo" 
+            *ngIf="!course.featured_background.id"
+            style="background-image: url('/assets/placeholders/courses-header.jpg')"
+        >
+        </div>
+        <mat-card-content class="general-header-content">
+          <h2>New Course</h2>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="primary-body">
+    <div class="multi-column one-four row-loose">
+        <div>
+            <h4>Create Course</h4>
+            <p>Start by giving your new course a name.</p>
+        </div>
+        <div>
+            <mat-card>
+                <div class="settings-form-field-wrapper">
+                    <mat-form-field color="accent">
+                        <input [(ngModel)]="course.name" matInput type="text" placeholder="Course name">
+                       
+                    </mat-form-field>
+                    <mat-error *ngIf="errors.name.display">{{errors.name.message}}</mat-error>
+                    
+
+                    <button mat-raised-button color="primary" (click)="createCourse()">
+                        Continue
+                    </button>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+</div>

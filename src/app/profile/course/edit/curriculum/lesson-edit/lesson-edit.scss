@@ -1,0 +1,83 @@
+@import "../../../../../mixins.scss";
+@import "../../../../../variables.scss";
+.order-columns {
+    justify-content: space-between;
+}
+
+.text-header{
+    h2{
+        color: $brand-secondary;
+        margin-bottom: 1rem;
+    }
+
+    .mat-divider{
+        margin-bottom: 1rem;
+    }
+}
+
+.lesson-content{
+    display: flex;
+    flex-direction: column;
+}
+.lesson-content-order{
+
+    .content-section{
+        @include flex-vertical{
+            align-items: center;
+        }
+        @include mq('tablet-small', max) {
+            width: 100%;
+        }
+        width: 49%;
+        .draggable{
+            @include flex-vertical{
+                align-items: center;
+            }
+            width: 100%;
+            height: 100%;
+            .media-item, .gu-transit{
+                @include flex-horizontal{
+                    align-items: center;
+                    justify-content: center;
+                }
+                &.empty{
+                    border-style: dashed;
+                    border-width: 2px;
+                    transition: all 0.3s linear;
+                }
+                margin-top: 1rem;
+                width: 80%;
+                height: 100px;
+                touch-action: none;
+                cursor: pointer;
+                position: relative;
+                user-select: none;
+                .media-icon{
+                    position: absolute;
+                    left: 1rem;
+                    top: calc(50% - 12px);
+                    width: 24px;
+                    height: 24px;
+                    path{
+                        fill: $brand-secondary !important;
+                    }
+                }
+                .badge{
+                    position: absolute;
+                    top: 0.5rem;
+                    right: 0.5rem;
+                }
+                .close{
+                    position: absolute;
+                    right: 0.5rem;
+                    top: 1rem;
+                    color: red;
+                }
+            }
+        }
+        .title{
+            text-align: center;
+        }
+  
+    }
+}

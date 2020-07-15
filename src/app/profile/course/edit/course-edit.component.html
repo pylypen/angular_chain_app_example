@@ -1,0 +1,46 @@
+<div class="primary-header no-padding">
+    <mat-card class="general-header">
+        <div class="cover-photo" 
+            *ngIf="course.featured_background.id"
+            [ngStyle]="{
+                'background-image' : 'url(' + course.featured_background.src + ')'
+            }"
+        >
+        </div>
+        <div class="cover-photo" 
+            *ngIf="!course.featured_background.id"
+            style="background-image: url('/assets/placeholders/courses-header.jpg')"
+        >
+        </div>
+        <mat-card-content class="general-header-content">
+            <h2>{{course.name}}</h2>
+            <h4>by {{course.author.displayName()}}</h4>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="primary-body">
+    <mat-card matRipple class="responsive" (click)="toggleMenu()">
+        <svg-icon src="/assets/icons/hamburger.svg"></svg-icon>
+        <h4>Menu</h4>
+    </mat-card>
+    <nav [@responsiveMenu]="currentState" mat-tab-nav-bar>
+        <a mat-tab-link
+           routerLink="/profile/course/{{course.id}}/edit/details"
+           [active]="(active_tab == 'details')">
+            Course Details
+        </a>
+        <a mat-tab-link
+           routerLink="/profile/course/{{course.id}}/edit/curriculum"
+           [active]="(active_tab == 'curriculum')">
+            Curriculum
+        </a>
+        <a mat-tab-link
+            routerLink="/profile/course/{{course.id}}/edit/publish/request-review"
+            [active]="(active_tab == 'publish')">
+            Publish
+        </a>
+    </nav>
+
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,46 @@
+<div class="primary-header no-padding">
+    <mat-card class="general-header">
+        <div class="cover-photo"
+             *ngIf="course.featured_background.id"
+             [ngStyle]="{
+                'background-image' : 'url(' + course.featured_background.src + ')'
+            }"
+        >
+        </div>
+        <div class="cover-photo"
+             *ngIf="!course.featured_background.id"
+             style="background-image: url('/assets/placeholders/courses-header.jpg')"
+        >
+        </div>
+        <mat-card-content class="general-header-content">
+            <h2>Grade & Review & Assign:</h2>
+            <h4>{{course.name}}</h4>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="primary-body">
+    <mat-card matRipple class="responsive" (click)="toggleMenu()">
+        <svg-icon src="/assets/icons/hamburger.svg"></svg-icon>
+        <h4>Menu</h4>
+    </mat-card>
+    <nav [@responsiveMenu]="currentState" mat-tab-nav-bar>
+        <a mat-tab-link
+           routerLink="/profile/course/{{course_id}}/manage/review"
+           [active]="(active_tab == 'review')">
+            Review
+        </a>
+        <a mat-tab-link
+           routerLink="/profile/course/{{course_id}}/manage/assign"
+           [active]="(active_tab == 'assign')">
+            Assign
+        </a>
+        <a mat-tab-link
+           routerLink="/profile/course/{{course_id}}/manage/progress"
+           [active]="(active_tab == 'progress')">
+            Learning Progress
+        </a>
+    </nav>
+
+    <router-outlet></router-outlet>
+</div>

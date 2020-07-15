@@ -1,0 +1,103 @@
+@import "../../mixins.scss";
+@import "../../variables.scss";
+
+
+.toolbar {
+  background: $brand-secondary;
+  padding-left: 70px !important;
+  height: 5rem !important;
+  @include mq('tablet', max) {
+    position: fixed !important;
+    z-index: 2;
+  }
+
+  profile-header {
+    width: 100%;
+    @include flex-horizontal;
+    justify-content: space-between;
+    padding-left: 2rem;
+    @include mq('phone-wide', max) {
+      padding: 0 1rem 0 1rem;
+      justify-content: flex-end;
+    }
+
+    .toolbar-page-title {
+      @include mq('phone-wide', max) {
+        display: none;
+      }
+      @include ui-wayfinding-labels;
+      @include flex-horizontal;
+      align-items: center;
+      flex: 5 5 80%;
+      -ms-flex: 5 5 80%;
+      color: white;
+    }
+
+    .toolbar-trial {
+      border: white solid 1px;
+      color: white;
+      flex: 1 1 10%;
+      -ms-flex: 1 1 10%;
+      @include flex-horizontal;
+      border-radius: 3px;
+      padding: 0 1rem;
+      p {
+        margin: auto;
+        a {
+          color: white;
+        }
+      }
+    }
+
+    .toolbar-actions {
+      flex: 0 1 auto;
+      -ms-flex: 0 1 auto;
+      text-align: right;
+      @include mq('phone-wide', max) {
+        width: auto;
+      }
+      cursor: pointer;
+      @include flex-horizontal;
+
+      .toolbar-menu-container {
+        @include flex-horizontal {
+          justify-content: center;
+          align-items: center;
+        }
+
+        .user-info {
+          @include flex-horizontal;
+          padding: 0.5rem;
+
+          .user-avatar {
+            width: 2rem;
+            height: 2rem;
+            margin: auto;
+            border-radius: 50%;
+          }
+
+          .user-name {
+            @include flex-vertical {
+              align-items: flex-start;
+              justify-content: space-around;
+            }
+            color: white;
+            @include no-user-select;
+            margin-left: 0.5rem;
+
+            .user-org {
+              opacity: 0.6;
+              text-overflow: ellipsis;
+            }
+          }
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+  }
+}
+
+

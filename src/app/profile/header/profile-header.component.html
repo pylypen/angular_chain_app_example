@@ -1,0 +1,76 @@
+<div class="toolbar-page-title">
+    {{page_title}}
+</div>
+<div class="toolbar-trial" *ngIf="subscription && subscription.is_trial && !subscription.subscribed_plan.id">
+    <p>{{daysDifference(subscription.trial_ends)}} days left in your trial period.<br/> 
+    <a routerLink="/profile/settings/subscription-tiers"
+        title="Subscription plans">
+        <strong>Upgrade now.</strong>
+        </a>
+    </p>
+</div>
+<div class="toolbar-actions">
+    <div class="toolbar-notifications">
+        <!--  <div class="notify-badge-messages" [matMenuTriggerFor]="messages">
+              <div class="icon"><svg-icon src="/assets/icons/messages_v2.svg"></svg-icon></div>
+              <div class="badge-count">2</div>
+              <mat-menu #messages="matMenu" [overlapTrigger]="false">
+                  <h6 matSubheader>Messages</h6>
+                  <h6 matSubheader>Mark all as read</h6>
+                  <mat-divider></mat-divider>
+                  <div mat-menu-item class="message-entry">
+                      <div class="message-content">
+                        <div class="message-member-wrapper">
+                            <img class="user-avatar" src=""/>
+                        </div>
+                        <div class="message">
+                          <h6>John Doe</h6>
+                          <p>
+                            Nam at tincidunt ligula, at posuere augue. Sed in sollicitudin massa. Quisque in lacus nulla.
+                          </p>
+                          <div>March 24, 2018 at 6:42pm</div>
+
+                        </div>
+                        <div class="message-actions">
+                          <div>
+                            <a routerLink="">Reply</a>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </mat-menu>
+          </div> -->
+        <!-- <div class="notify-badge-events" [matMenuTriggerFor]="notifications">
+            <div class="icon"><svg-icon src="/assets/icons/notifications.svg"></svg-icon></div>
+            <div class="badge-count">2</div>
+            <mat-menu #notifications="matMenu" [overlapTrigger]="false">
+                <h6 matSubheader>Notifications</h6>
+                <h6 matSubheader>Clear all</h6>
+                <mat-divider></mat-divider>
+                <a mat-menu-item routerLink="/profile/settings">Settings</a>
+            </mat-menu>
+        </div> -->
+    </div>
+    <div class="toolbar-menu-container">
+        <div mat-button [matMenuTriggerFor]="menu">
+            <div class="user-info">
+                <img class="user-avatar" *ngIf="identity.user.avatar.id" [src]="identity.user.avatar.src"/>
+                <img class="user-avatar" mat-card-avatar class="profile-avatar large" *ngIf="!identity.user.avatar.id"
+                        src="/assets/placeholders/placeholder-avatar.jpg"/>
+                <div class="user-name">
+                    <span>{{identity.user.displayName()}}</span>
+                    <span class="user-org">{{identity.organisation.name}}</span>
+
+                </div>
+            </div>
+            <!--<div class="icon">ˇ</div>-->
+        </div>
+        <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <h6 matSubheader>Your account</h6>
+            <mat-divider></mat-divider>
+            <a mat-menu-item *ngIf="!disabled_navigation" routerLink="/profile/settings">Settings</a>
+            <a mat-menu-item (click)="openIntercom()">Help</a>
+            <a mat-menu-item *ngIf="!disabled_navigation" (click)="logout()">Log out</a>
+        </mat-menu>
+    </div>
+</div>

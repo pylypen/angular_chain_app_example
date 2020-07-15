@@ -1,0 +1,65 @@
+<div class="create-edit-action-bar">
+    <div>
+        <h4>
+            Lessons
+        </h4>
+    </div>
+    <div class="action-buttons">
+        <ng-container *ngIf="course.completion == 100">
+            <a [routerLink]="" (click)="requestCertificate(course.id)" class="naked-link">
+                View Certificate
+            </a>
+            <a [routerLink]="" (click)="requestEmailCertificate(course.id)" class="naked-link">
+                Email Certificate
+            </a>
+        </ng-container>
+    </div>
+</div>
+
+<div class="one-column">
+    <div>
+        <mat-table #table [dataSource]="dataSource" class="lessons">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="order">
+                <mat-header-cell class="t-responsive" *matHeaderCellDef> No.</mat-header-cell>
+                <mat-cell class="t-responsive" *matCellDef="let element"> Lesson {{element.order}}</mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Lesson Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}}</mat-cell>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="progress">
+                <mat-header-cell class="m-responsive" *matHeaderCellDef> Lesson Progress</mat-header-cell>
+                <mat-cell class="m-responsive" *matCellDef="let element">
+                    <ng-container *ngIf="element.progress.progress_status.percent > 0">
+                        {{element.progress.progress_status.percent}}%
+                    </ng-container>
+                    <ng-container *ngIf="element.progress.progress_status.percent == 0">
+                        Not Yet Started
+                    </ng-container>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="actionLabel">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <!--<button routerLink="/profile/lesson/{{element.id}}/view/{{course_id}}">Start</button> -->
+                    <button mat-raised-button color="primary"
+                            routerLink="/profile/course/{{course.id}}/view/lesson/{{element.id}}">
+                        {{element.progress.progress_status.percent == 0 ? 'Start' : 'Continue'}}
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+    </div>
+</div>

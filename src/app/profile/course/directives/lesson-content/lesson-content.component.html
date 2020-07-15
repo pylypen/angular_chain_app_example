@@ -1,0 +1,177 @@
+<div class="lesson-content-section">
+    <ng-container *ngFor="let media of used_media; let i = index">
+        <mat-card [ngStyle]="{'order': i}" class="lesson-video"
+                  *ngIf="lesson.video_media.length && media.name == 'Video'">
+            <div class="video-wrapper">
+                <vg-player (onPlayerReady)="videoPlayerReady($event)" class="video-player">
+                    <vg-buffering></vg-buffering>
+
+                    <vg-controls>
+                        <vg-play-pause></vg-play-pause>
+
+                        <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+                        <vg-scrub-bar>
+                            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                            <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                        </vg-scrub-bar>
+
+                        <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+                        <vg-mute></vg-mute>
+                        <vg-volume></vg-volume>
+
+                        <vg-fullscreen></vg-fullscreen>
+                    </vg-controls>
+
+                    <video #videoMedia
+                           [vgMedia]="videoMedia"
+                           [src]="current_video.file.src"
+                           id="lessonVideoMedia"
+                           preload="auto"
+                           crossorigin>
+                    </video>
+                </vg-player>
+            </div>
+            <mat-list class="media-list" dense>
+                <h3 matSubheader>Videos for this lesson</h3>
+                <ng-container *ngFor="let item of lesson.video_media;let $index=index">
+                    <mat-list-item *ngIf="item.media_extension.media_type.name != 'Embed'"
+                                   (click)="switchVideo(item,$index)">
+                        <svg-icon src="/assets/icons/video.svg"></svg-icon>
+                        <span
+                            matTooltip="{{item.name}}"
+                            [ngClass]="{'current':current_video.id == item.id}">{{item.shortName()}}</span>
+                    </mat-list-item>
+                </ng-container>
+            </mat-list>
+        </mat-card>
+    </ng-container>
+
+    <ng-container *ngFor="let media of used_media; let i = index">
+        <mat-card [ngStyle]="{'order': i}" class="lesson-video"
+                  *ngIf="lesson.embed_youtube_media.length && media.name == 'Embed'">
+            <div class="video-wrapper">
+                <iframe class="youtube-iframe" [src]="saveYTUrl" frameborder="0" allow="encrypted-media"></iframe>
+            </div>
+            <mat-list class="media-list" dense>
+                <h3 matSubheader>Videos for this lesson</h3>
+                <mat-list-item *ngFor="let item of lesson.embed_youtube_media;let $index=index"
+                               (click)="switchEmbed(item,$index)">
+                    <svg-icon src="/assets/icons/youtube.svg"></svg-icon>
+                    <span
+                        matTooltip="{{item.name}}"
+                        [ngClass]="{'current':current_embed.id == item.id}">{{item.shortName()}}</span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
+    </ng-container>
+
+    <ng-container *ngFor="let media of used_media; let i = index">
+        <mat-card [ngStyle]="{'order': i}" class="lesson-audio"
+                  *ngIf="lesson.audio_media.length && media.name == 'Audio'">
+            <div class="audio-wrapper">
+                <vg-player (onPlayerReady)="audioPlayerReady($event)" class="audio-player">
+                    <vg-controls>
+                        <vg-play-pause></vg-play-pause>
+
+                        <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+                        <vg-scrub-bar>
+                            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                            <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                        </vg-scrub-bar>
+
+                        <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
+                        <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+                        <vg-mute></vg-mute>
+                        <vg-volume></vg-volume>
+
+                    </vg-controls>
+
+                    <audio #audioMedia
+                           [vgMedia]="audioMedia"
+                           [src]="current_audio.file.src"
+                           id="lessonAudioMedia"
+                           preload="auto"
+                           crossorigin>
+                    </audio>
+                </vg-player>
+            </div>
+
+            <mat-list class="media-list" dense>
+                <h3 matSubheader>Audio for this lesson</h3>
+                <mat-list-item *ngFor="let item of lesson.audio_media; let $index=index"
+
+                               (click)="switchAudio(item,$index)">
+                    <svg-icon src="/assets/icons/audio.svg"></svg-icon>
+                    <span matTooltip="{{item.name}}"
+                          [ngClass]="{'current':current_audio.id == item.id}">{{item.shortName()}}</span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
+    </ng-container>
+
+    <ng-container *ngFor="let media of used_media; let i = index">
+        <mat-card [ngStyle]="{'order': i}" class="lesson-articulate"
+                  *ngIf="lesson.articulate_media.length && media.name == 'Articulate'">
+            <div class="articulate-wrapper">
+                <div class="articulate" *ngIf="saveArticulateUrl">
+                    <iframe [src]="saveArticulateUrl">
+                    </iframe>
+                </div>
+                <div class="articulate-placeholder" *ngIf="!saveArticulateUrl">
+                    <div class="placeholder">
+                        <svg-icon class="articulate-svg" src="/assets/logos/articulate-logo.svg">
+                        </svg-icon>
+
+                        <svg-icon class="play" (click)="switchArticulate(lesson.articulate_media[0], 0)"
+                                  src="/assets/icons/play.svg"></svg-icon>
+
+                        <span>Click on lesson or "play" below to start</span>
+                    </div>
+
+                </div>
+
+            </div>
+            <mat-list class="media-list" dense>
+                <h3 matSubheader>Articulate content for this lesson</h3>
+                <mat-list-item *ngFor="let item of lesson.articulate_media; let $index=index"
+
+                               (click)="switchArticulate(item,$index)">
+                    <svg-icon src="/assets/icons/articulate.svg"></svg-icon>
+                    <span matTooltip="{{item.name}}"
+                          [ngClass]="{'current':current_articulate.id == item.id}">{{item.shortName()}}</span>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
+    </ng-container>
+
+    <ng-container *ngFor="let media of used_media; let i = index">
+        <mat-card [ngStyle]="{'order': i}" class="lesson-documents"
+                  *ngIf="lesson.document_media.length && media.name == 'Document'">
+            <mat-list class="media-list docs" dense>
+                <h3 matSubheader>Documents for this lesson</h3>
+                <mat-list-item *ngFor="let item of lesson.document_media">
+                    <a matTooltip="{{item.name}}" [href]="item.file.src" target="_blank">
+                        <svg-icon src="/assets/icons/file.svg"></svg-icon>
+                        {{item.shortName()}}
+                    </a>
+                </mat-list-item>
+            </mat-list>
+        </mat-card>
+    </ng-container>
+
+    <br/>
+
+    <mat-card class="lesson-description" [ngStyle]="{'order': '99'}" *ngIf="lesson.description"
+              [innerHTML]="lesson.description | sanitizeHtml">
+
+    </mat-card>
+
+    <mat-card [ngStyle]="{'order': '99'}" class="lesson-description" *ngIf="!lesson.description">
+        No description available for this lesson.
+    </mat-card>
+
+</div>

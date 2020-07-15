@@ -1,0 +1,91 @@
+<mat-sidenav #sidenav mode="over" class="main-menu" [ngClass]="{
+    responsive: responsive,
+    opened: sidenav_opened,
+    closed: !sidenav_opened,
+    unlabeled: responsive || !sidenav_opened
+}" fixedInViewport>
+    <div class="logo-container" [ngClass]="{
+    'loading': rotate_spinner
+    }" alt="LearnHub Logo">
+        <div class="collapsed">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 93.3 93.3" style="enable-background:new 0 0 93.3 93.3;" xml:space="preserve">
+
+            </svg>
+        </div>
+        <svg-icon class="opened" src=""></svg-icon>
+    </div>
+    <div class="menu-option-container" *ngIf="!disabled_navigation">
+        <a class="menu-option-entry menu-toggle"
+           [routerLink]=""
+           (click)="toggle()"
+           title="Toggle menu">
+            <div class="icon">
+                <svg-icon src="/assets/icons/hamburger.svg"></svg-icon>
+            </div>
+            <div class="label">Collapse Menu</div>
+        </a>
+        <a class="menu-option-entry mobile-toggle"
+           [routerLink]=""
+           (click)="responsiveToggle()" title="Toggle menu">
+            <div class="icon">
+                <svg-icon src="/assets/icons/hamburger.svg"></svg-icon>
+            </div>
+        </a>
+        <a
+                [ngClass]="{'menu-option-entry':true, 'active':activeMenuItem=='dashboard'}"
+                routerLink="/profile/dashboard"
+                title="Dashboard">
+            <div class="icon">
+                <svg-icon src="/assets/icons/home.svg"></svg-icon>
+            </div>
+            <div class="label">Dashboard</div>
+        </a>
+        <a
+                [ngClass]="{'menu-option-entry':true, 'active':activeMenuItem=='courses'}"
+                routerLink="/profile/courses"
+                title="Courses">
+            <div class="icon">
+                <svg-icon src="/assets/icons/courses.svg"></svg-icon>
+            </div>
+            <div class="label">Courses</div>
+        </a>
+        <a [ngClass]="{'menu-option-entry':true, 'active':activeMenuItem=='teams'}" routerLink="/profile/teams"
+           title="Teams">
+            <div class="icon">
+                <svg-icon src="/assets/icons/teams.svg"></svg-icon>
+            </div>
+            <div class="label">Teams</div>
+        </a>
+        <a
+                [ngClass]="{'menu-option-entry':true, 'active':activeMenuItem=='people'}"
+                routerLink="/profile/people"
+                *ngIf="config.organisation.is_admin || config.organisation.is_owner"
+                title="People">
+            <div class="icon">
+                <svg-icon src="/assets/icons/people.svg"></svg-icon>
+            </div>
+            <div class="label">People</div>
+        </a>
+
+        <a [ngClass]="{'menu-option-entry':true, 'active':activeMenuItem=='statistics'}"
+           routerLink="/profile/statistics"
+           *ngIf="team_admin || config.organisation.is_admin || config.organisation.is_owner"
+           title="Statistics">
+            <div class="icon">
+                <svg-icon src="/assets/icons/stats.svg"></svg-icon>
+            </div>
+            <div class="label">Statistics</div>
+        </a>
+        <a [ngClass]="{'menu-option-entry':true, 'active': activeMenuItem=='settings'}"
+           routerLink="/profile/settings/personal-information"
+           title="Settings">
+            <div class="icon">
+                <svg-icon src="/assets/icons/settings.svg"></svg-icon>
+            </div>
+            <div class="label">Settings</div>
+        </a>
+
+    </div>
+</mat-sidenav>

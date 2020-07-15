@@ -1,0 +1,51 @@
+@import "app-base.scss";
+@import "variables.scss";
+@import "mixins.scss";
+@import "typography.scss";
+@import "forms.scss";
+@import "tables.scss";
+@import "modals.scss";
+@import "material.scss";
+@import "headers.scss";
+@import "bootstrap.scss";
+@import "filters.scss";
+@import "scroll.scss";
+@import 'dragula.scss';
+@import "./profile/profile.scss";
+
+html {
+  background: $washed-gray;
+}
+
+body {
+  margin: 0 0;
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  .primary-layout {
+    @include flex-vertical;
+    width: 100%;
+    min-height: 93.75vh !important;
+    padding: 0 0 0 70px;
+    box-sizing: border-box;
+
+    @include mq('tablet', max){
+      padding: 5rem 0 0 0;
+    }
+
+    .primary-body {
+      flex: 4 4 auto;
+      -ms-flex: 4 4 auto;
+      padding: 2rem 3rem 15rem;
+  
+      @include mq('phone', max){
+        padding: 2rem 2rem 5rem;
+      }
+  
+    }
+  }
+
+}

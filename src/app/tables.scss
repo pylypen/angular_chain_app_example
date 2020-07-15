@@ -1,0 +1,259 @@
+@import "variables.scss";
+
+
+/* People table */
+.people {
+	.mat-row,
+	.mat-header-row {
+		padding: 0 0;
+	}
+	.mat-column-avatar {
+		flex: 0 1 4.5rem;
+		text-align: center;
+		@include mq('tablet-wide', max){
+			display: none;
+		}
+		span.block {
+			display: block;
+		}
+		.user-avatar {
+			width: 35px;
+			height: 35px;
+			margin: auto;
+			background: $washed-gray;
+			border-radius: 50%;
+			overflow:hidden;
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	.mat-column-display_name {
+		flex: 0 1 8rem;
+	}
+	.mat-column-email {
+		flex: 0 1 12rem;
+		@include mq('tablet-wide', max){
+			display: none;
+		}
+	}
+	.mat-column-status {
+		flex: 0 1 6rem;
+		@include mq('phone-wide', max){
+			display: none;
+		}
+	}
+	.mat-column-teams{
+        @include flex-horizontal{
+            flex-wrap: wrap;
+        }
+		@include mq('desktop', max){
+			display: none;
+		}
+	}
+	.mat-column-last_login {
+		flex: 0 1 7rem;
+		@include mq('tablet-wide', max){
+			display: none;
+		}
+	}
+	.mat-column-org_admin {
+		flex: 0 1 7rem;
+		text-align: center;
+	}
+	.mat-column-actions {
+		flex: 0 1 7rem;
+		text-align: center;
+		.button-row {
+			@include flex-horizontal;
+		}
+	}
+}
+
+/* Lessons table */
+.lessons {
+	.mat-row,
+	.mat-header-row {
+		padding: 0 1.5rem !important;
+		.mat-header-cell, .mat-cell{
+			&.mat-column-order{
+				@include mq('tablet-wide', max){
+					display: none;
+				}
+			}
+			&.mat-column-name {
+				//
+			}
+			&.mat-column-progress{
+				flex: 0 1 115px;
+				@include mq('phablet', max){
+					display: none;
+				}
+				&::after{
+
+				}
+			}
+			&.mat-column-actionLabel{
+				flex: 0 0 125px !important;
+				-ms-flex: 0 0 125px !important;
+				text-align:center;
+				padding-left: 0.5rem;
+
+			}
+		}
+	}
+}
+
+// Certificate table
+.cert-table{
+	width: 100%;
+	.certificates {
+		.mat-row{
+			padding: 0 .5rem !important;
+		}
+		.mat-header-cell {
+				flex: 1 1 14% !important;
+				-ms-flex: 1 1 14% !important;
+				font-weight: bold;
+				&.responsive{
+					@include mq('tablet-wide', max){
+						display: none;
+					}
+				}
+				&.mat-column-issued_org_name{
+					@include mq('phablet', max){
+						display: none;
+					}
+				}
+				&.mat-column-issued_course_name {
+					max-width: 120px;
+				}
+				&.mat-column-issued_course_author_name {
+					flex: 0 1 12% !important;
+					-ms-flex: 0 1 12% !important;
+				}
+				&.mat-column-issued_course_count_lessons {
+					flex: 0 1  7% !important;
+					-ms-flex: 0 1 7% !important;
+				}
+		}
+		.mat-cell {
+				flex: 1 1 14% !important;
+				-ms-flex: 1 1 14% !important;
+				&.responsive{
+					@include mq('tablet-wide', max){
+						display: none;
+					}
+				}
+				&.mat-column-issued_org_name{
+					@include mq('phablet', max){
+						display: none;
+					}
+				}
+				&.mat-column-issued_course_name {
+					text-overflow: ellipsis;
+					overflow:hidden;
+					white-space: nowrap;
+					max-width: 120px;
+				}
+				&.mat-column-issued_course_author_name {
+					flex: 0 1 12% !important;
+					-ms-flex: 0 1 12% !important;
+				}
+				&.mat-column-issued_course_count_lessons {
+					flex: 0 1 7% !important;
+					-ms-flex: 0 1 7% !important;
+				}
+		}
+	}
+}
+
+
+
+// Developers table
+
+.developers_accounts{
+	.mat-row,
+	.mat-header-row {
+		.mat-header-cell, .mat-cell{
+			&.mat-column-access_used{
+				max-width: 3rem;
+			}
+			&.mat-column-actions{
+				max-width: 5rem;
+			}
+			&.mat-column-account_key{
+				min-width: 20rem;
+				.icon{
+					display: none;
+				}
+				@include mq('phablet', max){
+					@include flex-horizontal{
+						justify-content: center;
+						align-items: center;
+					}
+					min-width: 0;
+					.icon, svg-icon{
+						display: block;
+						width: 2rem;
+						height: 2rem;
+					}
+					#key{
+						display: none;
+					}
+				}
+			}
+			&.mat-column-email{
+				@include mq('tablet', max){
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+
+
+// Courses table
+
+.courses {
+	.mat-row,
+	.mat-header-row {
+		.mat-header-cell, .mat-cell{
+			&.mat-column-course{
+				@include mq('tablet', max){
+					flex: 3;
+				}
+			}
+			&.mat-column-assigned_users{
+				@include mq('tablet', max){
+					display: none;
+				}
+			}
+			&.mat-column-started_users {
+				@include mq('tablet', max){
+					display: none;
+				}
+			}
+			&.mat-column-completed_users{
+				@include mq('tablet', max){
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+// Statictics table
+
+.staticticsTable {
+	.mat-header-cell, .mat-cell{
+		&.mat-column-csv{
+			flex: 0.5 !important;
+		}
+	}
+}

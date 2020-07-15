@@ -1,0 +1,14 @@
+<h1 mat-dialog-title class="primary-color">Delete User</h1>
+<mat-dialog-content class="accent-color">
+
+    Are you sure that you want to delete user <b>{{user.displayName()}}</b>?
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button color="warn" mat-button mat-dialog-close>
+        Cancel
+    </button>
+    <button mat-raised-button color="warn" (click)="confirmDelete()">
+        Delete
+    </button>
+</mat-dialog-actions>

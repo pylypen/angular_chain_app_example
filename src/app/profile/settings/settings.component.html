@@ -1,0 +1,92 @@
+<section class="account-settings">
+    <div class="primary-header">
+        <mat-card class="profile-header">
+            <div class="cover-photo" 
+                *ngIf="identity.organisation.cover_picture.id"
+                [ngStyle]="{
+                    'background-image' : 'url(' + identity.organisation.cover_picture.src + ')'
+                }">
+            </div>
+            <div class="cover-photo"
+                *ngIf="!identity.organisation.cover_picture.id"
+                style="background-image: url('/assets/placeholders/placeholder-org-cover.jpg')">
+            </div>
+            <mat-card-content class="profile-content">
+                <img mat-card-avatar class="profile-avatar large" *ngIf="identity.user.avatar.id"
+                     [src]="identity.user.avatar.src"/>
+                <img mat-card-avatar class="profile-avatar large" *ngIf="!identity.user.avatar.id"
+                     src="/assets/placeholders/placeholder-avatar.jpg"/>
+                <h3>{{identity.user.displayName()}}</h3>
+                <div class="profile-assigned-teams">
+                    <span *ngFor="let team of teams.visibleTeams()">{{ team.team.name }}</span>
+                    <span [title]="teams.teamsWithoutVisible()" *ngIf="teams.teamsCountWithoutVisible()">
+                        {{teams.teamsCountWithoutVisible()}} more...
+                    </span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+
+    <div class="primary-body">
+        <div class="settings">
+            <div class="subnav-container">
+                <mat-card matRipple class="subnavResponsive" (click)="toggleMenu()">
+                    <svg-icon src="/assets/icons/hamburger.svg"></svg-icon>
+                    <h4>Menu</h4>
+                </mat-card>
+                <mat-card class="subnav" [@responsiveMenu]="currentState">
+                    <mat-nav-list class="navlist">
+                        <h2 matSubheader>Personal</h2>
+                        <a mat-list-item
+                           [ngClass]="{
+                            active: currentPage == 'Personal Information'
+                        }"
+                           (click)="changeCurrentMenuItem('Personal Information')"
+                           routerLink="/profile/settings/personal-information">
+                            Personal Information
+                        </a>
+                        <a mat-list-item
+                           [ngClass]="{
+                            active: currentPage === 'Certificates of Completion'
+                        }"
+                           (click)="changeCurrentMenuItem('Certificates of Completion')"
+                           routerLink="/profile/settings/certificates">
+                            Certificates of Completion
+                        </a>
+                        <a mat-list-item
+                           [ngClass]="{
+                            active: currentPage === 'Change Password'
+                        }"
+                           (click)="changeCurrentMenuItem('Change Password')"
+                           routerLink="/profile/settings/change-password">
+                            Change Password
+                        </a>
+
+
+
+                        <!--<a mat-list-item routerLink="/profile/settings/notifications">Notifications</a>
+                        <a mat-list-item routerLink="/profile/settings/chat-messages">Messages</a>-->
+
+                        <!-- For Org Admins only -->
+                        <mat-divider></mat-divider>
+                        <h2 *ngIf="config.organisation.is_admin || config.organisation.is_owner" matSubheader>
+                            Organization</h2>
+                        <a *ngIf="config.organisation.is_admin || config.organisation.is_owner" mat-list-item
+                           [ngClass]="{ active: currentPage === 'Organization Information' }"
+                           (click)="changeCurrentMenuItem('Organization Information')"
+                           routerLink="/profile/settings/account-settings">Organization Information</a>
+
+                        <a *ngIf="config.organisation.is_admin || config.organisation.is_owner" mat-list-item
+                           [ngClass]="{ active: currentPage === 'Developers Accounts' }"
+                           (click)="changeCurrentMenuItem('Developers Accounts')"
+                           routerLink="/profile/settings/developers-accounts">Developers Accounts</a>
+                    </mat-nav-list>
+                </mat-card>
+            </div>
+            <div class="routerSettings">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,43 @@
+@import "variables";
+
+@mixin no-user-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+}
+@mixin ui-wayfinding-labels {
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  font-weight:600;
+}
+@mixin flex-horizontal {
+  display: -ms-flex;
+  display: flex;
+  flex-direction: row;
+  @content;
+}
+
+@mixin flex-vertical {
+  display: -ms-flex;
+  display: flex;
+  flex-direction: column;
+  @content;
+}
+
+@mixin rounded-corners {
+  border-radius: 4px;
+}
+
+@mixin mq($width, $type: min) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}

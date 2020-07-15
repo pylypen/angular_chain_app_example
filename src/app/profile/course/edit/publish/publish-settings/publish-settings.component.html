@@ -1,0 +1,21 @@
+<div class="multi-column one-four row-loose"
+     *ngIf="config.org_teams_accepted.length">
+    <div>
+        <h4>Review Approved</h4>
+        <mat-card>
+            <ng-container *ngIf="config.org_teams_accepted.length">
+                <h4><strong>{{config.organisation.name}} (Organization)</strong></h4>
+                <mat-divider></mat-divider>
+                <mat-list class="course-review team-list">
+                    <mat-list-item *ngFor="let team of config.org_teams_accepted">
+                        {{team.name}}
+                        <mat-slide-toggle color="primary" [(ngModel)]="team.marketplace[0].is_published"
+                            (change)="publishUnpublish($event,team.id,course.id)">
+                            Publish/Unpublish
+                        </mat-slide-toggle>
+                    </mat-list-item>
+                </mat-list>
+            </ng-container>
+        </mat-card>
+    </div>
+</div>
